@@ -5,345 +5,656 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>NBA Move Master</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Bangers&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-serif;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent}
-.hd{text-align:center;padding:20px 16px 4px}
-.hd h1{font-family:'Bangers','Impact',sans-serif;font-size:clamp(2rem,8vw,3.5rem);letter-spacing:3px;color:#FFD700;text-shadow:0 0 30px rgba(255,215,0,.3),0 2px 16px rgba(255,107,0,.5);line-height:1}
-.hd .sb{font-size:clamp(.65rem,2.2vw,.9rem);color:rgba(255,255,255,.5);letter-spacing:5px;text-transform:uppercase;margin-top:4px;font-weight:500}
-.gm{display:flex;flex-direction:column;align-items:center;padding:8px 16px 24px}
-.wz{position:relative;width:84vw;max-width:440px;margin:6px auto;overflow:visible}
-.wz svg.wheel{display:block;width:100%;height:auto;border-radius:50%;overflow:hidden;will-change:transform}
-.pt{position:absolute;top:-12px;left:50%;margin-left:-16px;z-index:20}
-.hb{position:absolute;top:50%;left:50%;width:60px;height:60px;margin-top:-30px;margin-left:-30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,#C8102E);border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6)}
-.hb span{font-family:'Bangers','Impact',sans-serif;font-size:.8rem;letter-spacing:2px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
-.rp{position:absolute;inset:0;z-index:30;display:none;flex-direction:column;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#0d0d1a 0%,#111118 50%,#0d0d1a 100%);border:2px solid rgba(255,107,0,.3);box-shadow:0 0 60px rgba(255,107,0,.15)}
-.rp.on{display:flex;animation:pop .4s cubic-bezier(.16,1,.3,1)}
-@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-.rt{text-align:center;padding:12px 12px 4px;flex-shrink:0;background:linear-gradient(180deg,rgba(255,107,0,.12),transparent)}
-.rpl{font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.3rem,4.5vw,1.8rem);color:#FFD700;text-shadow:0 2px 10px rgba(255,107,0,.4);line-height:1.1}
-.rpm{font-size:clamp(.65rem,1.8vw,.8rem);color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:3px;margin-top:2px}
-.ga{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 10px;overflow:hidden;position:relative}
-.ga iframe{width:100%;height:100%;border:0;border-radius:10px;background:#000}
-.ga video,.ga img{max-width:100%;max-height:100%;border-radius:10px;object-fit:contain;box-shadow:0 4px 20px rgba(0,0,0,.5)}
-.ga .ld{color:rgba(255,255,255,.25);font-size:.7rem;letter-spacing:2px;text-align:center}
-.ga .ld .ball{font-size:1.5rem;display:block;margin-bottom:4px;animation:bounce .6s ease-in-out infinite alternate}
-@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
-.rb{flex-shrink:0;padding:6px 10px 10px;text-align:center}
-.rd{font-size:clamp(.7rem,1.8vw,.85rem);color:rgba(255,255,255,.6);line-height:1.4;margin-bottom:4px}
-.rs{font-size:.75rem;color:rgba(255,255,255,.35);margin-bottom:5px}
-.rs .on{color:#FFD700}
-.rpb{display:inline-block;margin-bottom:4px;padding:2px 10px;background:#C8102E;border-radius:10px;font-family:'Bangers','Impact',sans-serif;font-size:.55rem;letter-spacing:2px;color:#fff}
-.rbs{display:flex;gap:5px;justify-content:center;flex-wrap:wrap}
-.rbs button{padding:7px 16px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(.8rem,2.4vw,.95rem);letter-spacing:1.5px;border:none;border-radius:18px;cursor:pointer;transition:transform .1s}
-.rbs button:active{transform:scale(.95)}
-.bn{color:#111;background:linear-gradient(135deg,#00E676,#00C853)}
-.bb{color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)!important}
-.bx{color:#111;background:linear-gradient(135deg,#FFD700,#FF6B00)}
-.sp{display:block;margin:10px auto 0;padding:14px 50px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(1rem,4vw,1.4rem);letter-spacing:4px;color:#111;background:linear-gradient(135deg,#FFD700,#FF6B00);border:none;border-radius:30px;cursor:pointer;box-shadow:0 4px 25px rgba(255,107,0,.4);transition:transform .15s}
-.sp:active{transform:scale(.96)}
-.sp:disabled{opacity:.5;cursor:not-allowed}
-.sc{display:flex;gap:20px;justify-content:center;margin-top:12px;padding:8px 24px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,215,0,.12)}
-.st{display:flex;align-items:center;gap:5px}
-.l{font-size:clamp(.6rem,1.8vw,.75rem);color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;font-weight:700}
-.n{font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.1rem,4vw,1.5rem);color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,.3)}
-.i{font-size:clamp(.9rem,3vw,1.1rem)}
-.cb{position:fixed;top:0;left:0;width:100%;pointer-events:none;z-index:100}
-.cf{position:absolute;top:-10px;width:8px;height:8px;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #0a0a14;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1 {
+font-family: ‘Bangers’, cursive;
+font-size: clamp(2rem, 8vw, 3.5rem);
+color: #FFD700;
+text-shadow: 0 0 30px rgba(255,215,0,.3), 0 2px 16px rgba(255,107,0,.5);
+text-align: center;
+margin-top: 16px;
+letter-spacing: 3px;
+}
+.sub {
+text-align: center;
+font-size: clamp(.6rem, 2vw, .85rem);
+color: rgba(255,255,255,.5);
+letter-spacing: 5px;
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+
+/* WHEEL AREA */
+.wheel-area {
+position: relative;
+width: 84vw;
+max-width: 440px;
+margin: 0 auto;
+}
+/* Force square with padding trick */
+.wheel-area::before {
+content: ‘’;
+display: block;
+padding-bottom: 100%;
+}
+
+.wheel-svg {
+position: absolute;
+top: 0; left: 0;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+}
+
+.pointer {
+position: absolute;
+top: -10px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 10;
+}
+
+.hub-btn {
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+width: 60px; height: 60px;
+border-radius: 50%;
+border: 3px solid #FFD700;
+background: radial-gradient(circle at 35% 35%, #ff8c00, #C8102E);
+color: #fff;
+font-family: ‘Bangers’, cursive;
+font-size: .8rem;
+letter-spacing: 2px;
+cursor: pointer;
+z-index: 10;
+box-shadow: 0 0 20px rgba(255,107,0,.6);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+/* RESULT OVERLAY */
+.result {
+display: none;
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+z-index: 20;
+flex-direction: column;
+border-radius: 16px;
+overflow: hidden;
+background: linear-gradient(180deg, #0d0d1a, #111118, #0d0d1a);
+border: 2px solid rgba(255,107,0,.3);
+}
+.result.show { display: flex; }
+.result-top {
+text-align: center;
+padding: 12px 12px 4px;
+background: linear-gradient(180deg, rgba(255,107,0,.12), transparent);
+}
+.result-player {
+font-family: ‘Bangers’, cursive;
+font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+color: #FFD700;
+text-shadow: 0 2px 10px rgba(255,107,0,.4);
+}
+.result-move {
+font-size: clamp(.6rem, 1.8vw, .8rem);
+color: rgba(255,255,255,.6);
+text-transform: uppercase;
+letter-spacing: 3px;
+margin-top: 2px;
+}
+.video-area {
+flex: 1;
+min-height: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 6px 10px;
+overflow: hidden;
+}
+.video-area iframe {
+width: 100%; height: 100%;
+border: 0; border-radius: 10px;
+background: #000;
+}
+.video-area video, .video-area img {
+max-width: 100%; max-height: 100%;
+border-radius: 10px;
+object-fit: contain;
+}
+.result-bottom {
+padding: 6px 10px 10px;
+text-align: center;
+}
+.challenge-label {
+display: inline-block;
+padding: 2px 10px;
+background: #C8102E;
+border-radius: 10px;
+font-family: ‘Bangers’, cursive;
+font-size: .55rem;
+letter-spacing: 2px;
+margin-bottom: 4px;
+}
+.challenge-desc {
+font-size: clamp(.7rem, 1.8vw, .85rem);
+color: rgba(255,255,255,.6);
+line-height: 1.4;
+margin-bottom: 4px;
+}
+.stars {
+font-size: .75rem;
+color: rgba(255,255,255,.35);
+margin-bottom: 5px;
+}
+.stars .on { color: #FFD700; }
+.btns { display: flex; gap: 5px; justify-content: center; }
+.btns button {
+padding: 7px 16px;
+font-family: ‘Bangers’, cursive;
+font-size: clamp(.8rem, 2.4vw, .95rem);
+letter-spacing: 1.5px;
+border: none;
+border-radius: 18px;
+cursor: pointer;
+}
+.btn-green { color: #111; background: linear-gradient(135deg, #00E676, #00C853); }
+.btn-ghost { color: #fff; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15) !important; }
+.btn-gold { color: #111; background: linear-gradient(135deg, #FFD700, #FF6B00); }
+
+/* SPIN BUTTON */
+.spin-btn {
+display: block;
+margin: 10px auto 0;
+padding: 14px 50px;
+font-family: ‘Bangers’, cursive;
+font-size: clamp(1rem, 4vw, 1.4rem);
+letter-spacing: 4px;
+color: #111;
+background: linear-gradient(135deg, #FFD700, #FF6B00);
+border: none;
+border-radius: 30px;
+cursor: pointer;
+box-shadow: 0 4px 25px rgba(255,107,0,.4);
+}
+.spin-btn:disabled { opacity: .5; }
+
+/* SCOREBOARD */
+.score-bar {
+display: flex;
+gap: 20px;
+justify-content: center;
+margin-top: 12px;
+padding: 8px 24px;
+background: rgba(255,255,255,.04);
+border-radius: 20px;
+border: 1px solid rgba(255,215,0,.12);
+}
+.stat { display: flex; align-items: center; gap: 5px; }
+.stat-label {
+font-size: clamp(.6rem, 1.8vw, .75rem);
+color: rgba(255,255,255,.5);
+text-transform: uppercase;
+letter-spacing: 2px;
+font-weight: 700;
+}
+.stat-num {
+font-family: ‘Bangers’, cursive;
+font-size: clamp(1.1rem, 4vw, 1.5rem);
+color: #FFD700;
+text-shadow: 0 0 10px rgba(255,215,0,.3);
+}
+
+/* CONFETTI */
+.confetti-box { position: fixed; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 100; }
+.conf {
+position: absolute;
+top: -10px;
+width: 8px; height: 8px;
+animation: confFall linear forwards;
+}
+@keyframes confFall {
+to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Loading bounce */
+@keyframes bnc { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+.bounce { animation: bnc .6s ease-in-out infinite alternate; }
 </style>
+
 </head>
 <body>
-<div class="hd"><h1>NBA MOVE MASTER</h1><div class="sb">Mini Hoop Challenge</div></div>
-<div class="gm">
-<div class="wz" id="wz">
-<svg class="wheel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-<circle cx="250" cy="250" r="250" fill="#08080e"/>
-<circle cx="250" cy="250" r="247" fill="none" stroke="rgba(255,107,0,0.35)" stroke-width="3"/>
-<g id="segs">
-<path d="M250,250 L250.0,10.0 A240,240 0 0,1 280.1,11.9 Z" fill="#C8102E" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L280.1,11.9 A240,240 0 0,1 309.7,17.5 Z" fill="#1D428A" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L309.7,17.5 A240,240 0 0,1 338.3,26.9 Z" fill="#552583" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L338.3,26.9 A240,240 0 0,1 365.6,39.7 Z" fill="#007A33" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L365.6,39.7 A240,240 0 0,1 391.1,55.8 Z" fill="#CE1141" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L391.1,55.8 A240,240 0 0,1 414.3,75.0 Z" fill="#006BB6" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L414.3,75.0 A240,240 0 0,1 434.9,97.0 Z" fill="#F58426" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L434.9,97.0 A240,240 0 0,1 452.6,121.4 Z" fill="#860038" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L452.6,121.4 A240,240 0 0,1 467.2,147.8 Z" fill="#E56020" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L467.2,147.8 A240,240 0 0,1 478.3,175.8 Z" fill="#00471B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L478.3,175.8 A240,240 0 0,1 485.7,205.0 Z" fill="#1D1160" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L485.7,205.0 A240,240 0 0,1 489.5,234.9 Z" fill="#236192" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L489.5,234.9 A240,240 0 0,1 489.5,265.1 Z" fill="#EF3B24" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L489.5,265.1 A240,240 0 0,1 485.7,295.0 Z" fill="#002D62" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L485.7,295.0 A240,240 0 0,1 478.3,324.2 Z" fill="#FFC72C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L478.3,324.2 A240,240 0 0,1 467.2,352.2 Z" fill="#00788C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L467.2,352.2 A240,240 0 0,1 452.6,378.6 Z" fill="#E31837" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L452.6,378.6 A240,240 0 0,1 434.9,403.0 Z" fill="#002B5C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L434.9,403.0 A240,240 0 0,1 414.3,425.0 Z" fill="#F9A01B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L414.3,425.0 A240,240 0 0,1 391.1,444.2 Z" fill="#5D76A9" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L391.1,444.2 A240,240 0 0,1 365.6,460.3 Z" fill="#C8102E" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L365.6,460.3 A240,240 0 0,1 338.3,473.1 Z" fill="#1D428A" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L338.3,473.1 A240,240 0 0,1 309.7,482.5 Z" fill="#552583" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L309.7,482.5 A240,240 0 0,1 280.1,488.1 Z" fill="#007A33" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L280.1,488.1 A240,240 0 0,1 250.0,490.0 Z" fill="#CE1141" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L250.0,490.0 A240,240 0 0,1 219.9,488.1 Z" fill="#006BB6" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L219.9,488.1 A240,240 0 0,1 190.3,482.5 Z" fill="#F58426" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L190.3,482.5 A240,240 0 0,1 161.7,473.1 Z" fill="#860038" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L161.7,473.1 A240,240 0 0,1 134.4,460.3 Z" fill="#E56020" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L134.4,460.3 A240,240 0 0,1 108.9,444.2 Z" fill="#00471B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L108.9,444.2 A240,240 0 0,1 85.7,425.0 Z" fill="#1D1160" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L85.7,425.0 A240,240 0 0,1 65.1,403.0 Z" fill="#236192" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L65.1,403.0 A240,240 0 0,1 47.4,378.6 Z" fill="#EF3B24" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L47.4,378.6 A240,240 0 0,1 32.8,352.2 Z" fill="#002D62" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L32.8,352.2 A240,240 0 0,1 21.7,324.2 Z" fill="#FFC72C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L21.7,324.2 A240,240 0 0,1 14.3,295.0 Z" fill="#00788C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L14.3,295.0 A240,240 0 0,1 10.5,265.1 Z" fill="#E31837" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L10.5,265.1 A240,240 0 0,1 10.5,234.9 Z" fill="#002B5C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L10.5,234.9 A240,240 0 0,1 14.3,205.0 Z" fill="#F9A01B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L14.3,205.0 A240,240 0 0,1 21.7,175.8 Z" fill="#5D76A9" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L21.7,175.8 A240,240 0 0,1 32.8,147.8 Z" fill="#C8102E" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L32.8,147.8 A240,240 0 0,1 47.4,121.4 Z" fill="#1D428A" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L47.4,121.4 A240,240 0 0,1 65.1,97.0 Z" fill="#552583" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L65.1,97.0 A240,240 0 0,1 85.7,75.0 Z" fill="#007A33" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L85.7,75.0 A240,240 0 0,1 108.9,55.8 Z" fill="#CE1141" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L108.9,55.8 A240,240 0 0,1 134.4,39.7 Z" fill="#006BB6" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L134.4,39.7 A240,240 0 0,1 161.7,26.9 Z" fill="#F58426" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L161.7,26.9 A240,240 0 0,1 190.3,17.5 Z" fill="#860038" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L190.3,17.5 A240,240 0 0,1 219.9,11.9 Z" fill="#E56020" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<path d="M250,250 L219.9,11.9 A240,240 0 0,1 250.0,10.0 Z" fill="#00471B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-86.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Abdul-Jabbar</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-79.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Jordan</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-72.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Olajuwon</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-64.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Nowitzki</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-57.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Iverson</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-50.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Curry</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-43.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">LeBron</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-36.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kobe</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-28.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kyrie</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-21.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Harden</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-14.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Magic</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-7.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Duncan</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(0.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Durant</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(7.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Shaq</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(14.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Bird</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(21.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Dr. J</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(28.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Vinsanity</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(36.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Parker</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(43.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Nash</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(50.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">CP3</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(57.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Wade</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(64.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Giannis</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(72.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Ja</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(79.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Luka</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(86.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Jokic</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(93.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Dame</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(100.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Melo</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(108.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">T-Mac</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(115.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Pippen</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(122.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">&#39;Nique</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(129.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">D-Rose</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(136.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Russ</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(144.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Manu</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(151.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">KG</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(158.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Pierce</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(165.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Ray</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(172.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Reggie</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(180.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">J-Will</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(187.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Hardaway</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(194.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Pistol Pete</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(201.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kawhi</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(208.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Embiid</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(216.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">DeRozan</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(223.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Ant-Man</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(230.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Trae</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(237.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Zeke</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(244.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Sir Charles</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(252.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kemp</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(259.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Iceman</text>
-<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(266.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Rondo</text>
-</g>
-<circle cx="250" cy="250" r="35" fill="rgba(0,0,0,0.5)"/>
-</svg>
-<div class="pt"><svg width="32" height="28" viewBox="0 0 32 28"><polygon points="16,28 0,0 32,0" fill="#FFD700" stroke="#b8860b" stroke-width="1"/></svg></div>
-<div class="hb" id="hub" onclick="spin()"><span>SPIN!</span></div>
-<div class="rp" id="rp">
-<div class="rt"><div class="rpl" id="rpP"></div><div class="rpm" id="rpM"></div></div>
-<div class="ga" id="gifArea"></div>
-<div class="rb">
-<div class="rpb">YOUR CHALLENGE</div>
-<div class="rd" id="rpD"></div>
-<div class="rs" id="rpS"></div>
-<div class="rbs">
-<button class="bn" onclick="nail()">NAILED IT &#10003;</button>
-<button class="bb" onclick="cls()">BACK</button>
-<button class="bx" onclick="nxt()">NEXT &#8594;</button>
+
+<h1>NBA MOVE MASTER</h1>
+<div class="sub">Mini Hoop Challenge</div>
+
+<div class="wheel-area" id="wheelArea">
+  <!-- SVG injected by JS on load -->
+  <div class="pointer">
+    <svg width="32" height="28" viewBox="0 0 32 28">
+      <polygon points="16,28 0,0 32,0" fill="#FFD700" stroke="#b8860b" stroke-width="1"/>
+    </svg>
+  </div>
+  <button class="hub-btn" onclick="doSpin()">SPIN!</button>
+
+  <div class="result" id="resultPanel">
+    <div class="result-top">
+      <div class="result-player" id="rPlayer"></div>
+      <div class="result-move" id="rMove"></div>
+    </div>
+    <div class="video-area" id="videoArea"></div>
+    <div class="result-bottom">
+      <div class="challenge-label">YOUR CHALLENGE</div>
+      <div class="challenge-desc" id="rDesc"></div>
+      <div class="stars" id="rStars"></div>
+      <div class="btns">
+        <button class="btn-green" onclick="nailedIt()">NAILED IT &#10003;</button>
+        <button class="btn-ghost" onclick="closeResult()">BACK</button>
+        <button class="btn-gold" onclick="nextSpin()">NEXT &#8594;</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<button class="spin-btn" id="spinBtn" onclick="doSpin()">SPIN THE WHEEL</button>
+
+<div class="score-bar">
+  <div class="stat">
+    <span class="stat-label">Score</span>
+    <span class="stat-num" id="scoreNum">0</span>
+    <span>&#127942;</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">Streak</span>
+    <span class="stat-num" id="streakNum">0</span>
+    <span id="streakIcon">&#128293;</span>
+  </div>
 </div>
-</div>
-</div>
-<button class="sp" id="spn" onclick="spin()">SPIN THE WHEEL</button>
-<div class="sc">
-<div class="st"><span class="l">Score</span><span class="n" id="scN">0</span><span class="i">&#127942;</span></div>
-<div class="st"><span class="l">Streak</span><span class="n" id="skN">0</span><span class="i" id="skI">&#128293;</span></div>
-</div>
-</div>
-<div class="cb" id="cb"></div>
+
+<div class="confetti-box" id="confettiBox"></div>
+
 <script>
-var M=[
-{p:"Kareem Abdul-Jabbar",ln:"Abdul-Jabbar",m:"Sky Hook",d:"Shoot a hook shot reaching HIGH overhead!",s:3,tk:"7067228818930683183",gq:"kareem sky hook NBA"},
-{p:"Michael Jordan",ln:"Jordan",m:"Fadeaway Jumper",d:"Jump backward while shooting — lean back like MJ!",s:4,yt:"uj1Hw4xgC_Q",gq:"michael jordan fadeaway"},
-{p:"Hakeem Olajuwon",ln:"Olajuwon",m:"Dream Shake",d:"Fake one way, spin the other, finish!",s:5,tk:"7233834962867260699",gq:"hakeem dream shake"},
-{p:"Dirk Nowitzki",ln:"Nowitzki",m:"One-Leg Fadeaway",d:"One leg, lean back, shoot over the defense!",s:4,tk:"7448026248074251551",gq:"dirk nowitzki fadeaway"},
-{p:"Allen Iverson",ln:"Iverson",m:"Killer Crossover",d:"Cross the ball hard left to right and blow by!",s:3,tk:"7276877007835663659",gq:"allen iverson crossover"},
-{p:"Steph Curry",ln:"Curry",m:"Deep Three",d:"Pull up from WAY behind the arc!",s:4,tk:"7490380783501315358",gq:"steph curry deep three"},
-{p:"LeBron James",ln:"LeBron",m:"Euro Step Layup",d:"Big step left, then right, finish at the rim!",s:3,yt:"x78KIrkzgew",gq:"lebron euro step"},
-{p:"Kobe Bryant",ln:"Kobe",m:"Turnaround Fadeaway",d:"Spin baseline, fade away, shoot. Mamba style!",s:5,tk:"7418449907540888839",gq:"kobe bryant fadeaway"},
-{p:"Kyrie Irving",ln:"Kyrie",m:"Spin Move Finish",d:"360 spin past the defender and finish at the rim!",s:4,yt:"PPwZN5G50gg",gq:"kyrie irving handles"},
-{p:"James Harden",ln:"Harden",m:"Step-Back Three",d:"Dribble forward, giant step back, pull the trigger!",s:3,yt:"w6p-UJJntgE",gq:"james harden step back"},
-{p:"Magic Johnson",ln:"Magic",m:"No-Look Pass",d:"Look one way, pass the other — sell the fake!",s:2,gq:"magic johnson no look pass"},
-{p:"Tim Duncan",ln:"Duncan",m:"Bank Shot",d:"Use the backboard every time — aim for the square!",s:2,gq:"tim duncan bank shot"},
-{p:"Kevin Durant",ln:"Durant",m:"Pull-Up Mid-Range",d:"Dribble to the elbow, rise up smooth and shoot!",s:3,gq:"kevin durant midrange"},
-{p:"Shaquille O'Neal",ln:"Shaq",m:"Drop Step Dunk",d:"Power dribble in the post, drop step, GO UP STRONG!",s:3,gq:"shaquille oneal dunk"},
-{p:"Larry Bird",ln:"Bird",m:"Catch & Shoot",d:"Catch the pass and shoot in one fluid motion!",s:2,gq:"larry bird three pointer"},
-{p:"Julius Erving",ln:"Dr. J",m:"Baseline Finger Roll",d:"Drive baseline and softly roll it off your fingers!",s:3,gq:"julius erving finger roll"},
-{p:"Vince Carter",ln:"Vinsanity",m:"360 Windmill Dunk",d:"Spin full 360 in the air and SLAM it home!",s:5,gq:"vince carter dunk contest"},
-{p:"Tony Parker",ln:"Parker",m:"Teardrop Floater",d:"Float a soft shot high over the defense!",s:3,gq:"tony parker floater"},
-{p:"Steve Nash",ln:"Nash",m:"Behind-the-Back Pass",d:"Wrap the ball behind your back to a teammate!",s:3,gq:"steve nash behind back pass"},
-{p:"Chris Paul",ln:"CP3",m:"Hesitation Crossover",d:"Pause with a hesitation, then cross and go!",s:3,gq:"chris paul crossover"},
-{p:"Dwyane Wade",ln:"Wade",m:"Euro Step Slam",d:"Euro step through traffic and slam it home!",s:3,gq:"dwyane wade euro step"},
-{p:"Giannis Antetokounmpo",ln:"Giannis",m:"Euro Step Dunk",d:"One massive step and throw it DOWN!",s:4,yt:"9jtOOQ43yw4",gq:"giannis euro step dunk"},
-{p:"Ja Morant",ln:"Ja",m:"Poster Dunk",d:"Full speed to the rim — DUNK ON SOMEBODY!",s:4,gq:"ja morant poster dunk"},
-{p:"Luka Doncic",ln:"Luka",m:"Step-Back Three",d:"Step way back behind the arc and pull the trigger!",s:4,gq:"luka doncic step back three"},
-{p:"Nikola Jokic",ln:"Jokic",m:"Sombor Shuffle",d:"Shuffle your feet, one-legged fadeaway!",s:5,gq:"jokic sombor shuffle"},
-{p:"Damian Lillard",ln:"Dame",m:"Logo Three",d:"From the LOGO — it's DAME TIME!",s:5,gq:"damian lillard logo three"},
-{p:"Carmelo Anthony",ln:"Melo",m:"Jab Step Jumper",d:"Triple threat, jab hard, freeze defender, pull up!",s:3,gq:"carmelo anthony jab step"},
-{p:"Tracy McGrady",ln:"T-Mac",m:"Elbow Jumper",d:"Face up at the elbow, smooth mid-range!",s:3,gq:"tracy mcgrady jumper NBA"},
-{p:"Scottie Pippen",ln:"Pippen",m:"Coast-to-Coast Slam",d:"Grab the rebound and go full court for the slam!",s:3,gq:"scottie pippen dunk"},
-{p:"Dominique Wilkins",ln:"'Nique",m:"Windmill Dunk",d:"Wind your arm around and SLAM it home!",s:5,gq:"dominique wilkins windmill dunk"},
-{p:"Derrick Rose",ln:"D-Rose",m:"Explosive Layup",d:"Explode to the rim with a quick finish!",s:3,gq:"derrick rose layup"},
-{p:"Russell Westbrook",ln:"Russ",m:"Tomahawk Dunk",d:"Ball behind head, cock back, SLAM IT!",s:4,gq:"russell westbrook dunk"},
-{p:"Manu Ginobili",ln:"Manu",m:"Euro Step",d:"The OG Euro Step — step left then right!",s:3,gq:"manu ginobili euro step"},
-{p:"Kevin Garnett",ln:"KG",m:"Turnaround Jumper",d:"Post up, turnaround, shoot over the defense!",s:3,gq:"kevin garnett jumper"},
-{p:"Paul Pierce",ln:"Pierce",m:"Step-Back Mid",d:"Step back and nail the clutch mid-range!",s:3,gq:"paul pierce clutch shot"},
-{p:"Ray Allen",ln:"Ray",m:"Catch & Shoot 3",d:"Sprint off the screen, catch, and shoot!",s:2,gq:"ray allen three pointer"},
-{p:"Reggie Miller",ln:"Reggie",m:"Off-Screen 3",d:"Run around a screen and nail the three!",s:3,gq:"reggie miller three pointer"},
-{p:"Jason Williams",ln:"J-Will",m:"Elbow Pass",d:"Bounce the ball off your elbow — playground legend!",s:5,gq:"jason williams elbow pass"},
-{p:"Tim Hardaway",ln:"Hardaway",m:"UTEP Two-Step",d:"Double crossover and blow past your defender!",s:4,gq:"tim hardaway crossover"},
-{p:"Pete Maravich",ln:"Pistol Pete",m:"Behind-Back Dribble",d:"Fancy behind-the-back dribble moves!",s:4,gq:"pete maravich dribble"},
-{p:"Kawhi Leonard",ln:"Kawhi",m:"Mid-Range Assassin",d:"Get to your spot, rise up, drain it. Ice cold!",s:3,yt:"6B4L-wlM8GY",gq:"kawhi leonard midrange"},
-{p:"Joel Embiid",ln:"Embiid",m:"Post Spin Move",d:"Pump fake, spin baseline, finish!",s:4,gq:"joel embiid post move"},
-{p:"DeMar DeRozan",ln:"DeRozan",m:"Footwork Fadeaway",d:"Fancy footwork in the post, hit a tough jumper!",s:4,gq:"demar derozan midrange"},
-{p:"Anthony Edwards",ln:"Ant-Man",m:"Power Dunk",d:"Attack the rim full speed and THROW IT DOWN!",s:4,gq:"anthony edwards dunk"},
-{p:"Trae Young",ln:"Trae",m:"Deep Floater",d:"Pull up from deep and float one in softly!",s:4,gq:"trae young floater"},
-{p:"Isiah Thomas",ln:"Zeke",m:"Acrobatic Layup",d:"Creative, acrobatic finish around the rim!",s:3,gq:"isiah thomas layup pistons"},
-{p:"Charles Barkley",ln:"Sir Charles",m:"Power Post Move",d:"Back them down with brute force and finish!",s:2,gq:"charles barkley dunk"},
-{p:"Shawn Kemp",ln:"Kemp",m:"Alley-Oop Slam",d:"Catch the lob and SLAM it with authority!",s:4,gq:"shawn kemp alley oop dunk"},
-{p:"George Gervin",ln:"Iceman",m:"Finger Roll",d:"Glide to the hoop, softly roll it off your fingers!",s:3,gq:"george gervin finger roll"},
-{p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",d:"Fake the pass perfectly, then finish yourself!",s:2,gq:"rajon rondo fake pass"}
+// ==================== DATA ====================
+var moves = [
+  {p:"Kareem Abdul-Jabbar",ln:"Abdul-Jabbar",m:"Sky Hook",d:"Shoot a hook shot reaching HIGH overhead!",s:3,tk:"7067228818930683183",gq:"kareem sky hook NBA"},
+  {p:"Michael Jordan",ln:"Jordan",m:"Fadeaway Jumper",d:"Jump backward while shooting - lean back like MJ!",s:4,yt:"uj1Hw4xgC_Q",gq:"michael jordan fadeaway"},
+  {p:"Hakeem Olajuwon",ln:"Olajuwon",m:"Dream Shake",d:"Fake one way, spin the other, finish!",s:5,tk:"7233834962867260699",gq:"hakeem dream shake"},
+  {p:"Dirk Nowitzki",ln:"Nowitzki",m:"One-Leg Fadeaway",d:"One leg, lean back, shoot over the defense!",s:4,tk:"7448026248074251551",gq:"dirk nowitzki fadeaway"},
+  {p:"Allen Iverson",ln:"Iverson",m:"Killer Crossover",d:"Cross the ball hard left to right and blow by!",s:3,tk:"7276877007835663659",gq:"allen iverson crossover"},
+  {p:"Steph Curry",ln:"Curry",m:"Deep Three",d:"Pull up from WAY behind the arc!",s:4,tk:"7490380783501315358",gq:"steph curry deep three"},
+  {p:"LeBron James",ln:"LeBron",m:"Euro Step Layup",d:"Big step left, then right, finish at the rim!",s:3,yt:"x78KIrkzgew",gq:"lebron euro step"},
+  {p:"Kobe Bryant",ln:"Kobe",m:"Turnaround Fadeaway",d:"Spin baseline, fade away, shoot. Mamba style!",s:5,tk:"7418449907540888839",gq:"kobe bryant fadeaway"},
+  {p:"Kyrie Irving",ln:"Kyrie",m:"Spin Move Finish",d:"360 spin past the defender and finish at the rim!",s:4,yt:"PPwZN5G50gg",gq:"kyrie irving handles"},
+  {p:"James Harden",ln:"Harden",m:"Step-Back Three",d:"Dribble forward, giant step back, pull the trigger!",s:3,yt:"w6p-UJJntgE",gq:"james harden step back"},
+  {p:"Magic Johnson",ln:"Magic",m:"No-Look Pass",d:"Look one way, pass the other - sell the fake!",s:2,gq:"magic johnson no look pass"},
+  {p:"Tim Duncan",ln:"Duncan",m:"Bank Shot",d:"Use the backboard every time - aim for the square!",s:2,gq:"tim duncan bank shot"},
+  {p:"Kevin Durant",ln:"Durant",m:"Pull-Up Mid-Range",d:"Dribble to the elbow, rise up smooth and shoot!",s:3,gq:"kevin durant midrange"},
+  {p:"Shaquille O'Neal",ln:"Shaq",m:"Drop Step Dunk",d:"Power dribble in the post, drop step, GO UP STRONG!",s:3,gq:"shaquille oneal dunk"},
+  {p:"Larry Bird",ln:"Bird",m:"Catch and Shoot",d:"Catch the pass and shoot in one fluid motion!",s:2,gq:"larry bird three pointer"},
+  {p:"Julius Erving",ln:"Dr. J",m:"Baseline Finger Roll",d:"Drive baseline and softly roll it off your fingers!",s:3,gq:"julius erving finger roll"},
+  {p:"Vince Carter",ln:"Vinsanity",m:"360 Windmill Dunk",d:"Spin full 360 in the air and SLAM it home!",s:5,gq:"vince carter dunk contest"},
+  {p:"Tony Parker",ln:"Parker",m:"Teardrop Floater",d:"Float a soft shot high over the defense!",s:3,gq:"tony parker floater"},
+  {p:"Steve Nash",ln:"Nash",m:"Behind-the-Back Pass",d:"Wrap the ball behind your back to a teammate!",s:3,gq:"steve nash behind back pass"},
+  {p:"Chris Paul",ln:"CP3",m:"Hesitation Crossover",d:"Pause with a hesitation, then cross and go!",s:3,gq:"chris paul crossover"},
+  {p:"Dwyane Wade",ln:"Wade",m:"Euro Step Slam",d:"Euro step through traffic and slam it home!",s:3,gq:"dwyane wade euro step"},
+  {p:"Giannis Antetokounmpo",ln:"Giannis",m:"Euro Step Dunk",d:"One massive step and throw it DOWN!",s:4,yt:"9jtOOQ43yw4",gq:"giannis euro step dunk"},
+  {p:"Ja Morant",ln:"Ja",m:"Poster Dunk",d:"Full speed to the rim - DUNK ON SOMEBODY!",s:4,gq:"ja morant poster dunk"},
+  {p:"Luka Doncic",ln:"Luka",m:"Step-Back Three",d:"Step way back behind the arc and pull the trigger!",s:4,gq:"luka doncic step back three"},
+  {p:"Nikola Jokic",ln:"Jokic",m:"Sombor Shuffle",d:"Shuffle your feet, one-legged fadeaway!",s:5,gq:"jokic sombor shuffle"},
+  {p:"Damian Lillard",ln:"Dame",m:"Logo Three",d:"From the LOGO - it is DAME TIME!",s:5,gq:"damian lillard logo three"},
+  {p:"Carmelo Anthony",ln:"Melo",m:"Jab Step Jumper",d:"Triple threat, jab hard, freeze defender, pull up!",s:3,gq:"carmelo anthony jab step"},
+  {p:"Tracy McGrady",ln:"T-Mac",m:"Elbow Jumper",d:"Face up at the elbow, smooth mid-range!",s:3,gq:"tracy mcgrady jumper NBA"},
+  {p:"Scottie Pippen",ln:"Pippen",m:"Coast-to-Coast Slam",d:"Grab the rebound and go full court for the slam!",s:3,gq:"scottie pippen dunk"},
+  {p:"Dominique Wilkins",ln:"Nique",m:"Windmill Dunk",d:"Wind your arm around and SLAM it home!",s:5,gq:"dominique wilkins windmill dunk"},
+  {p:"Derrick Rose",ln:"D-Rose",m:"Explosive Layup",d:"Explode to the rim with a quick finish!",s:3,gq:"derrick rose layup"},
+  {p:"Russell Westbrook",ln:"Russ",m:"Tomahawk Dunk",d:"Ball behind head, cock back, SLAM IT!",s:4,gq:"russell westbrook dunk"},
+  {p:"Manu Ginobili",ln:"Manu",m:"Euro Step",d:"The OG Euro Step - step left then right!",s:3,gq:"manu ginobili euro step"},
+  {p:"Kevin Garnett",ln:"KG",m:"Turnaround Jumper",d:"Post up, turnaround, shoot over the defense!",s:3,gq:"kevin garnett jumper"},
+  {p:"Paul Pierce",ln:"Pierce",m:"Step-Back Mid",d:"Step back and nail the clutch mid-range!",s:3,gq:"paul pierce clutch shot"},
+  {p:"Ray Allen",ln:"Ray",m:"Catch and Shoot 3",d:"Sprint off the screen, catch, and shoot!",s:2,gq:"ray allen three pointer"},
+  {p:"Reggie Miller",ln:"Reggie",m:"Off-Screen 3",d:"Run around a screen and nail the three!",s:3,gq:"reggie miller three pointer"},
+  {p:"Jason Williams",ln:"J-Will",m:"Elbow Pass",d:"Bounce the ball off your elbow - playground legend!",s:5,gq:"jason williams elbow pass"},
+  {p:"Tim Hardaway",ln:"Hardaway",m:"UTEP Two-Step",d:"Double crossover and blow past your defender!",s:4,gq:"tim hardaway crossover"},
+  {p:"Pete Maravich",ln:"Pistol Pete",m:"Behind-Back Dribble",d:"Fancy behind-the-back dribble moves!",s:4,gq:"pete maravich dribble"},
+  {p:"Kawhi Leonard",ln:"Kawhi",m:"Mid-Range Assassin",d:"Get to your spot, rise up, drain it. Ice cold!",s:3,yt:"6B4L-wlM8GY",gq:"kawhi leonard midrange"},
+  {p:"Joel Embiid",ln:"Embiid",m:"Post Spin Move",d:"Pump fake, spin baseline, finish!",s:4,gq:"joel embiid post move"},
+  {p:"DeMar DeRozan",ln:"DeRozan",m:"Footwork Fadeaway",d:"Fancy footwork in the post, hit a tough jumper!",s:4,gq:"demar derozan midrange"},
+  {p:"Anthony Edwards",ln:"Ant-Man",m:"Power Dunk",d:"Attack the rim full speed and THROW IT DOWN!",s:4,gq:"anthony edwards dunk"},
+  {p:"Trae Young",ln:"Trae",m:"Deep Floater",d:"Pull up from deep and float one in softly!",s:4,gq:"trae young floater"},
+  {p:"Isiah Thomas",ln:"Zeke",m:"Acrobatic Layup",d:"Creative, acrobatic finish around the rim!",s:3,gq:"isiah thomas layup pistons"},
+  {p:"Charles Barkley",ln:"Sir Charles",m:"Power Post Move",d:"Back them down with brute force and finish!",s:2,gq:"charles barkley dunk"},
+  {p:"Shawn Kemp",ln:"Kemp",m:"Alley-Oop Slam",d:"Catch the lob and SLAM it with authority!",s:4,gq:"shawn kemp alley oop dunk"},
+  {p:"George Gervin",ln:"Iceman",m:"Finger Roll",d:"Glide to the hoop, softly roll it off your fingers!",s:3,gq:"george gervin finger roll"},
+  {p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",d:"Fake the pass perfectly, then finish yourself!",s:2,gq:"rajon rondo fake pass"}
 ];
 
-var ang=0,busy=false,sc=0,sk=0,curLoad=0;
-var wheelSvg=document.querySelector(‘svg.wheel’);
+var teamColors = [
+  '#C8102E','#1D428A','#552583','#007A33','#CE1141',
+  '#006BB6','#F58426','#860038','#E56020','#00471B',
+  '#1D1160','#236192','#EF3B24','#002D62','#FFC72C',
+  '#00788C','#E31837','#002B5C','#F9A01B','#5D76A9'
+];
 
-function setRot(d){
-if(!wheelSvg)wheelSvg=document.querySelector(‘svg.wheel’);
-if(wheelSvg)wheelSvg.style.transform=‘rotate(’+d+‘deg)’;
+// ==================== STATE ====================
+var currentAngle = 0;
+var spinning = false;
+var score = 0;
+var streak = 0;
+var videoLoadId = 0;
+
+// ==================== BUILD WHEEL ====================
+function buildWheel() {
+  var n = moves.length;
+  var segDeg = 360 / n;
+  var cx = 250, cy = 250, r = 240;
+  var svgNS = 'http://www.w3.org/2000/svg';
+
+  var svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('viewBox', '0 0 500 500');
+  svg.setAttribute('class', 'wheel-svg');
+  svg.id = 'wheelSvg';
+
+  // Background
+  var bg = document.createElementNS(svgNS, 'circle');
+  bg.setAttribute('cx', cx);
+  bg.setAttribute('cy', cy);
+  bg.setAttribute('r', 250);
+  bg.setAttribute('fill', '#08080e');
+  svg.appendChild(bg);
+
+  // Rim
+  var rim = document.createElementNS(svgNS, 'circle');
+  rim.setAttribute('cx', cx);
+  rim.setAttribute('cy', cy);
+  rim.setAttribute('r', 247);
+  rim.setAttribute('fill', 'none');
+  rim.setAttribute('stroke', 'rgba(255,107,0,0.35)');
+  rim.setAttribute('stroke-width', '3');
+  svg.appendChild(rim);
+
+  // Segments
+  for (var i = 0; i < n; i++) {
+    var a1 = (i * segDeg - 90) * Math.PI / 180;
+    var a2 = ((i + 1) * segDeg - 90) * Math.PI / 180;
+    var x1 = cx + r * Math.cos(a1);
+    var y1 = cy + r * Math.sin(a1);
+    var x2 = cx + r * Math.cos(a2);
+    var y2 = cy + r * Math.sin(a2);
+
+    var path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d',
+      'M' + cx + ',' + cy +
+      ' L' + x1.toFixed(1) + ',' + y1.toFixed(1) +
+      ' A' + r + ',' + r + ' 0 0,1 ' + x2.toFixed(1) + ',' + y2.toFixed(1) + ' Z'
+    );
+    path.setAttribute('fill', teamColors[i % teamColors.length]);
+    path.setAttribute('stroke', 'rgba(0,0,0,0.3)');
+    path.setAttribute('stroke-width', '0.5');
+    svg.appendChild(path);
+
+    // Label
+    var labelAngle = (i * segDeg + segDeg / 2 - 90) * Math.PI / 180;
+    var txt = document.createElementNS(svgNS, 'text');
+    txt.setAttribute('x', cx + r - 10);
+    txt.setAttribute('y', cy);
+    txt.setAttribute('text-anchor', 'end');
+    txt.setAttribute('dominant-baseline', 'central');
+    txt.setAttribute('transform', 'rotate(' + (i * segDeg + segDeg / 2 - 90) + ',' + cx + ',' + cy + ')');
+    txt.setAttribute('fill', '#fff');
+    txt.setAttribute('font-family', 'Oswald, Arial Black, sans-serif');
+    txt.setAttribute('font-weight', '700');
+    txt.setAttribute('font-size', '11');
+    txt.setAttribute('stroke', 'rgba(0,0,0,0.7)');
+    txt.setAttribute('stroke-width', '2.5');
+    txt.setAttribute('paint-order', 'stroke');
+    txt.textContent = moves[i].ln;
+    svg.appendChild(txt);
+  }
+
+  // Center circle
+  var center = document.createElementNS(svgNS, 'circle');
+  center.setAttribute('cx', cx);
+  center.setAttribute('cy', cy);
+  center.setAttribute('r', 35);
+  center.setAttribute('fill', 'rgba(0,0,0,0.5)');
+  svg.appendChild(center);
+
+  // Insert as FIRST child of wheel-area (before pointer and hub)
+  var area = document.getElementById('wheelArea');
+  area.insertBefore(svg, area.firstChild);
+
+  return svg;
 }
 
-function win(){
-var segA=360/M.length;
-var nd=((ang%360)+360)%360;
-return Math.floor((360-nd)/segA)%M.length;
+// ==================== SPIN ====================
+var wheelEl = null;
+
+function doSpin() {
+  if (spinning) return;
+  closeResult();
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+
+  if (!wheelEl) {
+    wheelEl = document.getElementById('wheelSvg');
+  }
+
+  var duration = 4000 + Math.random() * 2500;
+  var totalRotation = 360 * (8 + Math.random() * 7);
+  var startAngle = currentAngle;
+  var startTime = Date.now();
+
+  function animate() {
+    var elapsed = Date.now() - startTime;
+    var progress = Math.min(elapsed / duration, 1);
+
+    // Ease out quart
+    var eased = 1 - Math.pow(1 - progress, 4);
+    currentAngle = startAngle + totalRotation * eased;
+
+    // Apply rotation via CSS transform on the SVG
+    wheelEl.style.webkitTransform = 'rotate(' + currentAngle + 'deg)';
+    wheelEl.style.transform = 'rotate(' + currentAngle + 'deg)';
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      spinning = false;
+      document.getElementById('spinBtn').disabled = false;
+      showResult();
+    }
+  }
+
+  requestAnimationFrame(animate);
 }
 
-function spin(){
-if(busy)return;cls();busy=true;
-document.getElementById(‘spn’).disabled=true;
-var dur=4000+Math.random()*2500,rot=360*(8+Math.random()*7),s=ang,t0=performance.now();
-(function f(now){
-var p=Math.min((now-t0)/dur,1);
-ang=s+rot*(1-Math.pow(1-p,4));setRot(ang);
-if(p<1)requestAnimationFrame(f);
-else{busy=false;document.getElementById(‘spn’).disabled=false;show();}
-})(t0);
+// ==================== WINNER LOGIC ====================
+function getWinner() {
+  var segDeg = 360 / moves.length;
+  var normalized = ((currentAngle % 360) + 360) % 360;
+  var index = Math.floor((360 - normalized) / segDeg) % moves.length;
+  return index;
 }
 
-function loadVideo(mv,ga,loadId){
-ga.innerHTML=’<div class="ld"><span class="ball">🏀</span>LOADING…</div>’;
-if(mv.yt){
-var ifr=document.createElement(‘iframe’);
-ifr.src=‘https://www.youtube.com/embed/’+mv.yt+’?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1’;
-ifr.allow=‘autoplay;encrypted-media’;ifr.allowFullscreen=true;
-ifr.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
-ga.innerHTML=’’;ga.appendChild(ifr);return;
-}
-if(mv.tk){
-var ifr2=document.createElement(‘iframe’);
-ifr2.src=‘https://www.tiktok.com/player/v1/’+mv.tk+’?music_info=0&description=0&autoplay=1&loop=1’;
-ifr2.allow=‘autoplay’;
-ifr2.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
-ga.innerHTML=’’;ga.appendChild(ifr2);return;
-}
-loadGiphy(mv,ga,loadId);
-}
+// ==================== RESULT PANEL ====================
+function showResult() {
+  var mv = moves[getWinner()];
+  document.getElementById('rPlayer').textContent = mv.p;
+  document.getElementById('rMove').textContent = mv.m;
+  document.getElementById('rDesc').textContent = mv.d;
 
-function loadGiphy(mv,ga,loadId){
-var q=encodeURIComponent(mv.gq||mv.p+’ ‘+mv.m);
-fetch(‘https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=’+q+’&limit=3&rating=g’)
-.then(function(r){return r.json();})
-.then(function(data){
-if(curLoad!==loadId)return;
-if(data.data&&data.data.length>0){
-var gif=data.data[0];var mp4=null,gifUrl=null;
-try{mp4=gif.images.original.mp4;}catch(e){}
-try{gifUrl=gif.images.fixed_height.url;}catch(e){}
-if(!gifUrl)try{gifUrl=gif.images.original.url;}catch(e){}
-if(mp4){
-var vid=document.createElement(‘video’);
-vid.autoplay=true;vid.loop=true;vid.muted=true;vid.playsInline=true;
-vid.setAttribute(‘playsinline’,’’);vid.src=mp4;
-vid.onloadeddata=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(vid);vid.play().catch(function(){});}};
-vid.onerror=function(){if(gifUrl&&curLoad===loadId){var img=new Image();img.src=gifUrl;img.onload=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(img);}};img.onerror=function(){showFB(mv,ga);};}else showFB(mv,ga);};
-} else if(gifUrl){
-var img=new Image();img.src=gifUrl;
-img.onload=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(img);}};
-img.onerror=function(){showFB(mv,ga);};
-} else showFB(mv,ga);
-} else showFB(mv,ga);
-}).catch(function(){if(curLoad===loadId)showFB(mv,ga);});
+  var starOn = '';
+  var starOff = '';
+  for (var i = 0; i < mv.s; i++) starOn += '\u2605';
+  for (var j = mv.s; j < 5; j++) starOff += '\u2606';
+  document.getElementById('rStars').innerHTML = 'Difficulty: <span class="on">' + starOn + '</span>' + starOff;
+
+  var panel = document.getElementById('resultPanel');
+  panel.classList.add('show');
+
+  videoLoadId++;
+  loadVideo(mv, document.getElementById('videoArea'), videoLoadId);
 }
 
-function showFB(mv,ga){ga.innerHTML=’<div style="text-align:center;padding:20px"><div style="font-size:4rem;animation:bounce .6s ease-in-out infinite alternate">🏀</div><div style="font-family:Bangers,sans-serif;font-size:1.3rem;color:#FFD700;margin-top:10px;letter-spacing:2px">’+mv.m.toUpperCase()+’</div><div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px">SHOW US YOUR MOVE!</div></div>’;}
-
-function show(){
-var mv=M[win()];
-document.getElementById(‘rpP’).textContent=mv.p;
-document.getElementById(‘rpM’).textContent=mv.m;
-document.getElementById(‘rpD’).textContent=mv.d;
-document.getElementById(‘rpS’).innerHTML=‘Difficulty: <span class="on">’+‘★’.repeat(mv.s)+’</span>’+‘☆’.repeat(5-mv.s);
-var ga=document.getElementById(‘gifArea’);ga.innerHTML=’’;curLoad++;
-document.getElementById(‘rp’).classList.add(‘on’);
-loadVideo(mv,ga,curLoad);
+function closeResult() {
+  videoLoadId++;
+  var va = document.getElementById('videoArea');
+  // Clean up iframes and videos
+  var iframes = va.querySelectorAll('iframe');
+  for (var i = 0; i < iframes.length; i++) {
+    iframes[i].src = '';
+    iframes[i].remove();
+  }
+  var vids = va.querySelectorAll('video');
+  for (var j = 0; j < vids.length; j++) {
+    vids[j].pause();
+    vids[j].src = '';
+    vids[j].remove();
+  }
+  va.innerHTML = '';
+  document.getElementById('resultPanel').classList.remove('show');
 }
 
-function cls(){
-curLoad++;var ga=document.getElementById(‘gifArea’);
-var vs=ga.getElementsByTagName(‘video’);while(vs.length){vs[0].pause();vs[0].src=’’;vs[0].parentNode.removeChild(vs[0]);}
-var fs=ga.getElementsByTagName(‘iframe’);while(fs.length){fs[0].src=’’;fs[0].parentNode.removeChild(fs[0]);}
-ga.innerHTML=’’;document.getElementById(‘rp’).classList.remove(‘on’);
+function nailedIt() {
+  score++;
+  streak++;
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('streakNum').textContent = streak;
+  var si = document.getElementById('streakIcon');
+  si.innerHTML = streak >= 5 ? '&#128293;&#128293;&#128293;' : streak >= 3 ? '&#128293;&#128293;' : '&#128293;';
+  confetti();
+  closeResult();
 }
 
-function nail(){sc++;sk++;document.getElementById(‘scN’).textContent=sc;document.getElementById(‘skN’).textContent=sk;document.getElementById(‘skI’).innerHTML=sk>=5?’🔥🔥🔥’:sk>=3?’🔥🔥’:’🔥’;boom();cls();}
-function nxt(){cls();setTimeout(spin,350);}
-
-function boom(){
-var b=document.getElementById(‘cb’);
-var cc=[’#FF6B00’,’#FFD700’,’#C8102E’,’#1D428A’,’#00E676’,’#FF4081’,’#fff’];
-for(var i=0;i<45;i++){var e=document.createElement(‘div’);e.className=‘cf’;e.style.left=Math.random()*100+’%’;e.style.backgroundColor=cc[~~(Math.random()*cc.length)];e.style.animationDelay=Math.random()*.4+‘s’;e.style.animationDuration=(2+Math.random()*1.5)+‘s’;var z=5+Math.random()*7;e.style.width=z+‘px’;e.style.height=z+‘px’;e.style.borderRadius=Math.random()>.5?‘50%’:‘2px’;b.appendChild(e);setTimeout(function(){e.remove();},3000);}
+function nextSpin() {
+  closeResult();
+  setTimeout(doSpin, 350);
 }
 
-document.getElementById(‘hub’).onclick=spin;
+// ==================== VIDEO LOADING ====================
+function loadVideo(mv, container, loadId) {
+  container.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,.25);font-size:.7rem;letter-spacing:2px"><div class="bounce" style="font-size:1.5rem;display:block;margin-bottom:4px">&#127936;</div>LOADING...</div>';
+
+  if (mv.yt) {
+    var ifr = document.createElement('iframe');
+    ifr.src = 'https://www.youtube.com/embed/' + mv.yt + '?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1';
+    ifr.allow = 'autoplay; encrypted-media';
+    ifr.allowFullscreen = true;
+    container.innerHTML = '';
+    container.appendChild(ifr);
+    return;
+  }
+
+  if (mv.tk) {
+    var ifr2 = document.createElement('iframe');
+    ifr2.src = 'https://www.tiktok.com/player/v1/' + mv.tk + '?music_info=0&description=0&autoplay=1&loop=1';
+    ifr2.allow = 'autoplay';
+    container.innerHTML = '';
+    container.appendChild(ifr2);
+    return;
+  }
+
+  // Giphy fallback
+  var q = encodeURIComponent(mv.gq || mv.p + ' ' + mv.m);
+  fetch('https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=' + q + '&limit=3&rating=g')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (videoLoadId !== loadId) return;
+      if (data.data && data.data.length > 0) {
+        var gif = data.data[0];
+        var mp4 = null;
+        var gifUrl = null;
+        try { mp4 = gif.images.original.mp4; } catch(e) {}
+        try { gifUrl = gif.images.fixed_height.url; } catch(e) {}
+        if (!gifUrl) try { gifUrl = gif.images.original.url; } catch(e) {}
+
+        if (mp4) {
+          var vid = document.createElement('video');
+          vid.autoplay = true;
+          vid.loop = true;
+          vid.muted = true;
+          vid.playsInline = true;
+          vid.setAttribute('playsinline', '');
+          vid.src = mp4;
+          vid.onloadeddata = function() {
+            if (videoLoadId === loadId) {
+              container.innerHTML = '';
+              container.appendChild(vid);
+              vid.play().catch(function() {});
+            }
+          };
+          vid.onerror = function() {
+            if (gifUrl && videoLoadId === loadId) {
+              container.innerHTML = '';
+              var img = new Image();
+              img.src = gifUrl;
+              container.appendChild(img);
+            } else {
+              showFallback(mv, container);
+            }
+          };
+        } else if (gifUrl) {
+          container.innerHTML = '';
+          var img = new Image();
+          img.src = gifUrl;
+          container.appendChild(img);
+        } else {
+          showFallback(mv, container);
+        }
+      } else {
+        showFallback(mv, container);
+      }
+    })
+    .catch(function() {
+      if (videoLoadId === loadId) showFallback(mv, container);
+    });
+}
+
+function showFallback(mv, container) {
+  container.innerHTML = '<div style="text-align:center;padding:20px">' +
+    '<div class="bounce" style="font-size:4rem">&#127936;</div>' +
+    '<div style="font-family:Bangers,cursive;font-size:1.3rem;color:#FFD700;margin-top:10px;letter-spacing:2px">' +
+    mv.m.toUpperCase() + '</div>' +
+    '<div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px">SHOW US YOUR MOVE!</div></div>';
+}
+
+// ==================== CONFETTI ====================
+function confetti() {
+  var box = document.getElementById('confettiBox');
+  var colors = ['#FF6B00','#FFD700','#C8102E','#1D428A','#00E676','#FF4081','#fff'];
+  for (var i = 0; i < 45; i++) {
+    var el = document.createElement('div');
+    el.className = 'conf';
+    el.style.left = Math.random() * 100 + '%';
+    el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDelay = Math.random() * 0.4 + 's';
+    el.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    var size = 5 + Math.random() * 7;
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    box.appendChild(el);
+    (function(e) { setTimeout(function() { e.remove(); }, 3000); })(el);
+  }
+}
+
+// ==================== INIT ====================
+buildWheel();
 </script>
 
 </body>
