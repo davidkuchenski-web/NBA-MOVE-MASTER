@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBA Move Master - Mini Hoop Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&family=Bangers&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B00;
+    --neon-orange: #FF8C00;
+    --dark: #0A0A12;
+    --darker: #06060A;
+    --white: #FAFAFA;
+    --gold: #FFD700;
+    --blue: #1D428A;
+    --red: #C8102E;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–dark);
+color: var(–white);
+font-family: ‘Oswald’, sans-serif;
+overflow-x: hidden;
+min-height: 100vh;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+top: 0; left: 0; right: 0; bottom: 0;
+background:
+radial-gradient(ellipse at 50% 50%, rgba(200,112,42,0.06) 0%, transparent 70%),
+repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,107,0,0.03) 80px, rgba(255,107,0,0.03) 81px),
+repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,107,0,0.03) 80px, rgba(255,107,0,0.03) 81px);
+pointer-events: none;
+z-index: 0;
+}
+
+.header {
+text-align: center;
+padding: 30px 20px 10px;
+position: relative;
+z-index: 1;
+}
+
+.header h1 {
+font-family: ‘Bangers’, cursive;
+font-size: clamp(2.5rem, 6vw, 4.5rem);
+letter-spacing: 4px;
+background: linear-gradient(180deg, var(–gold) 0%, var(–orange) 50%, var(–red) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+filter: drop-shadow(0 4px 20px rgba(255,107,0,0.4));
+line-height: 1.1;
+}
+
+.header .subtitle {
+font-family: ‘Oswald’, sans-serif;
+font-size: clamp(0.9rem, 2vw, 1.2rem);
+color: rgba(255,255,255,0.5);
+letter-spacing: 6px;
+text-transform: uppercase;
+margin-top: 5px;
+}
+
+.game-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px;
+position: relative;
+z-index: 1;
+}
+
+.wheel-section {
+position: relative;
+width: min(85vw, 520px);
+}
+
+.wheel-wrapper {
+position: relative;
+width: 100%;
+padding-bottom: 100%;
+}
+
+.wheel-outer-ring {
+position: absolute;
+top: -12px; left: -12px; right: -12px; bottom: -12px;
+border-radius: 50%;
+background: conic-gradient(from 0deg, var(–orange), var(–gold), var(–orange), var(–red), var(–orange), var(–gold), var(–orange));
+animation: ringPulse 3s ease-in-out infinite;
+opacity: 0.7;
+}
+
+@keyframes ringPulse {
+0%, 100% { opacity: 0.5; transform: scale(1); }
+50% { opacity: 0.8; transform: scale(1.005); }
+}
+
+.wheel-inner-bg {
+position: absolute;
+top: 3px; left: 3px; right: 3px; bottom: 3px;
+border-radius: 50%;
+background: var(–darker);
+}
+
+canvas#wheel {
+position: absolute;
+top: 6px; left: 6px;
+width: calc(100% - 12px);
+height: calc(100% - 12px);
+border-radius: 50%;
+cursor: pointer;
+transition: filter 0.3s;
+}
+
+canvas#wheel:hover { filter: brightness(1.1); }
+
+.pointer {
+position: absolute;
+top: -18px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 10;
+width: 0; height: 0;
+border-left: 20px solid transparent;
+border-right: 20px solid transparent;
+border-top: 40px solid var(–gold);
+filter: drop-shadow(0 4px 12px rgba(255,215,0,0.6));
+}
+
+.pointer::after {
+content: ‘’;
+position: absolute;
+top: -42px; left: -10px;
+width: 0; height: 0;
+border-left: 10px solid transparent;
+border-right: 10px solid transparent;
+border-top: 14px solid var(–neon-orange);
+}
+
+.center-hub {
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+width: 80px; height: 80px;
+border-radius: 50%;
+background: radial-gradient(circle, var(–orange) 0%, var(–red) 100%);
+border: 4px solid var(–gold);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 5;
+cursor: pointer;
+box-shadow: 0 0 30px rgba(255,107,0,0.5);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.center-hub:hover {
+transform: translate(-50%, -50%) scale(1.1);
+box-shadow: 0 0 50px rgba(255,107,0,0.8);
+}
+
+.center-hub span {
+font-family: ‘Bangers’, cursive;
+font-size: 1rem;
+letter-spacing: 2px;
+color: white;
+text-align: center;
+line-height: 1.1;
+}
+
+/* ====================== */
+/* VIDEO OVERLAY ON WHEEL */
+/* ====================== */
+.video-overlay {
+position: absolute;
+top: -12px; left: -12px; right: -12px; bottom: -12px;
+z-index: 50;
+display: none;
+flex-direction: column;
+border-radius: 20px;
+overflow: hidden;
+background: rgba(6, 6, 10, 0.97);
+border: 2px solid rgba(255,107,0,0.4);
+box-shadow: 0 0 80px rgba(255,107,0,0.25), inset 0 0 60px rgba(0,0,0,0.5);
+animation: overlayIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-overlay.active { display: flex; }
+
+@keyframes overlayIn {
+from { opacity: 0; transform: scale(0.85); }
+to { opacity: 1; transform: scale(1); }
+}
+
+.overlay-content {
+display: flex;
+flex-direction: column;
+height: 100%;
+padding: 14px;
+}
+
+.overlay-header {
+text-align: center;
+flex-shrink: 0;
+padding-bottom: 6px;
+}
+
+.overlay-header .player-name {
+font-family: ‘Bangers’, cursive;
+font-size: clamp(1.5rem, 4vw, 2.2rem);
+background: linear-gradient(135deg, var(–gold), var(–orange));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+line-height: 1.1;
+}
+
+.overlay-header .move-name {
+font-family: ‘Oswald’, sans-serif;
+font-size: clamp(0.75rem, 2vw, 1rem);
+color: rgba(255,255,255,0.6);
+text-transform: uppercase;
+letter-spacing: 3px;
+margin-top: 2px;
+}
+
+.challenge-badge {
+display: inline-block;
+margin-top: 6px;
+padding: 3px 14px;
+background: linear-gradient(135deg, var(–red), #8B0000);
+border-radius: 20px;
+font-family: ‘Bangers’, cursive;
+font-size: 0.75rem;
+letter-spacing: 2px;
+color: white;
+}
+
+.video-frame-wrap {
+flex: 1;
+min-height: 0;
+position: relative;
+border-radius: 10px;
+overflow: hidden;
+background: #000;
+border: 1px solid rgba(255,107,0,0.15);
+margin: 8px 0;
+}
+
+.video-frame-wrap iframe {
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 100%;
+border: none;
+}
+
+.overlay-footer {
+flex-shrink: 0;
+text-align: center;
+}
+
+.move-desc {
+font-size: clamp(0.7rem, 1.6vw, 0.9rem);
+color: rgba(255,255,255,0.55);
+line-height: 1.3;
+margin-bottom: 4px;
+}
+
+.difficulty {
+font-size: 0.8rem;
+color: rgba(255,255,255,0.4);
+margin-bottom: 8px;
+}
+
+.difficulty .stars { color: var(–gold); font-size: 0.9rem; }
+
+.overlay-actions {
+display: flex;
+gap: 8px;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.btn-nailed {
+padding: 9px 20px;
+font-family: ‘Bangers’, cursive;
+font-size: 1.05rem;
+letter-spacing: 2px;
+color: var(–dark);
+background: linear-gradient(135deg, #00E676, #00C853);
+border: none;
+border-radius: 30px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.btn-nailed:hover {
+transform: scale(1.05);
+box-shadow: 0 4px 16px rgba(0,230,118,0.4);
+}
+
+.btn-back {
+padding: 9px 20px;
+font-family: ‘Bangers’, cursive;
+font-size: 1.05rem;
+letter-spacing: 2px;
+color: white;
+background: rgba(255,255,255,0.1);
+border: 1px solid rgba(255,255,255,0.2);
+border-radius: 30px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.btn-back:hover {
+background: rgba(255,255,255,0.15);
+transform: scale(1.05);
+}
+
+.btn-next {
+padding: 9px 20px;
+font-family: ‘Bangers’, cursive;
+font-size: 1.05rem;
+letter-spacing: 2px;
+color: var(–dark);
+background: linear-gradient(135deg, var(–gold), var(–orange));
+border: none;
+border-radius: 30px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.btn-next:hover {
+transform: scale(1.05);
+box-shadow: 0 4px 16px rgba(255,107,0,0.4);
+}
+
+/* Spin button */
+.spin-btn {
+margin-top: 20px;
+padding: 16px 60px;
+font-family: ‘Bangers’, cursive;
+font-size: 1.8rem;
+letter-spacing: 4px;
+color: var(–dark);
+background: linear-gradient(135deg, var(–gold), var(–orange));
+border: none;
+border-radius: 50px;
+cursor: pointer;
+box-shadow: 0 6px 30px rgba(255,107,0,0.4), inset 0 2px 0 rgba(255,255,255,0.3);
+transition: all 0.3s;
+position: relative;
+overflow: hidden;
+}
+
+.spin-btn::before {
+content: ‘’;
+position: absolute;
+top: 0; left: -100%;
+width: 100%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+transition: left 0.5s;
+}
+
+.spin-btn:hover::before { left: 100%; }
+.spin-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 10px 40px rgba(255,107,0,0.6);
+}
+
+.spin-btn:active { transform: translateY(0); }
+.spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.streak-bar {
+display: flex;
+align-items: center;
+gap: 15px;
+margin-top: 15px;
+padding: 8px 24px;
+background: rgba(255,255,255,0.05);
+border-radius: 30px;
+border: 1px solid rgba(255,107,0,0.2);
+}
+
+.streak-bar .label {
+font-size: 0.85rem;
+color: rgba(255,255,255,0.4);
+text-transform: uppercase;
+letter-spacing: 3px;
+}
+
+.streak-bar .count {
+font-family: ‘Bangers’, cursive;
+font-size: 1.6rem;
+color: var(–gold);
+}
+
+.fire { font-size: 1.3rem; }
+
+.confetti-container {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+z-index: 200;
+}
+
+.confetti-piece {
+position: absolute;
+width: 10px; height: 10px;
+top: -10px;
+animation: confettiFall 2.5s ease-in forwards;
+}
+
+@keyframes confettiFall {
+0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+.header { padding: 20px 15px 5px; }
+.wheel-section { width: 95vw; }
+.center-hub { width: 60px; height: 60px; }
+.center-hub span { font-size: 0.8rem; }
+.spin-btn { padding: 14px 40px; font-size: 1.5rem; }
+.overlay-actions { gap: 6px; }
+.overlay-actions button { padding: 7px 14px; font-size: 0.95rem; }
+.overlay-content { padding: 10px; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <h1>NBA MOVE MASTER</h1>
+  <div class="subtitle">Mini Hoop Challenge</div>
+</div>
+
+<div class="game-container">
+  <div class="wheel-section">
+    <div class="wheel-wrapper">
+      <div class="wheel-outer-ring"></div>
+      <div class="wheel-inner-bg"></div>
+      <canvas id="wheel"></canvas>
+      <div class="pointer"></div>
+      <div class="center-hub" onclick="spinWheel()">
+        <span>SPIN IT!</span>
+      </div>
+
+```
+  <!-- VIDEO OVERLAY — sits directly on top of the wheel -->
+  <div class="video-overlay" id="videoOverlay">
+    <div class="overlay-content">
+      <div class="overlay-header">
+        <div class="player-name" id="overlayPlayer"></div>
+        <div class="move-name" id="overlayMove"></div>
+        <div class="challenge-badge">YOUR CHALLENGE</div>
+      </div>
+      <div class="video-frame-wrap">
+        <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="overlay-footer">
+        <div class="move-desc" id="overlayDesc"></div>
+        <div class="difficulty" id="overlayDifficulty"></div>
+        <div class="overlay-actions">
+          <button class="btn-nailed" onclick="nailedIt()">NAILED IT &#10003;</button>
+          <button class="btn-back" onclick="closeOverlay()">BACK</button>
+          <button class="btn-next" onclick="closeAndSpin()">NEXT &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+<button class="spin-btn" id="spinBtn" onclick="spinWheel()">SPIN THE WHEEL</button>
+
+  <div class="streak-bar">
+    <span class="label">Moves Nailed</span>
+    <span class="count" id="score">0</span>
+    <span class="fire">&#127942;</span>
+    <span class="label">Streak</span>
+    <span class="count" id="streak">0</span>
+    <span class="fire" id="streakFire">&#128293;</span>
+  </div>
+</div>
+
+<div class="confetti-container" id="confetti"></div>
+
+<script>
+const moves = [
+  { player: "Kareem Abdul-Jabbar", move: "Sky Hook", yt: "OKhaiSRMOeY", desc: "Shoot a hook shot reaching as high as you can! Unstoppable!", difficulty: 3 },
+  { player: "Michael Jordan", move: "Fadeaway Jumper", yt: "cu1YAr_vIBo", desc: "Jump backward while shooting — lean back like MJ!", difficulty: 4 },
+  { player: "Hakeem Olajuwon", move: "Dream Shake", yt: "22O2lApCBBs", desc: "Fake one way, spin the other, then finish! Shake & bake!", difficulty: 5 },
+  { player: "Dirk Nowitzki", move: "One-Leg Fadeaway", yt: "SPDRVBKugBc", desc: "Stand on one leg, lean back, and shoot. Pure Dirk!", difficulty: 4 },
+  { player: "Allen Iverson", move: "Killer Crossover", yt: "y3X274lz3wY", desc: "Cross the ball hard left to right, then blow by!", difficulty: 3 },
+  { player: "Steph Curry", move: "Deep Pull-Up Three", yt: "bKMz1GUzBBs", desc: "Take a few dribbles and pull up from WAY downtown!", difficulty: 4 },
+  { player: "LeBron James", move: "Euro Step Layup", yt: "VkvTLOhm-TQ", desc: "Step one direction, then quickly step the other for the layup!", difficulty: 3 },
+  { player: "Kobe Bryant", move: "Turnaround Fadeaway", yt: "Hbk3YG2cOPE", desc: "Back to the basket, spin, fade, and shoot. Mamba style!", difficulty: 5 },
+  { player: "Kyrie Irving", move: "Spin Move Finish", yt: "0FR-EnDFmBw", desc: "Dribble in, do a full 360 spin, and finish at the rim!", difficulty: 4 },
+  { player: "James Harden", move: "Step-Back Three", yt: "FeAPkIbbkoo", desc: "Dribble forward then take a big step back and shoot the three!", difficulty: 3 },
+  { player: "Magic Johnson", move: "No-Look Pass", yt: "xNpLKiaMWjo", desc: "Look one way but pass the other way. Use a wall to bounce it!", difficulty: 2 },
+  { player: "Tim Duncan", move: "Bank Shot", yt: "2L3UdDmzm_Q", desc: "Use the backboard! Aim for the square and bank it in.", difficulty: 2 },
+  { player: "Kevin Durant", move: "Pull-Up Mid-Range", yt: "j3wtK3l_VYQ", desc: "Dribble to the elbow area and rise up for a smooth jumper!", difficulty: 3 },
+  { player: "Shaquille O'Neal", move: "Drop Step Dunk", yt: "1NwgNLsPjvc", desc: "Post up, power dribble, drop step, and go up STRONG!", difficulty: 3 },
+  { player: "Larry Bird", move: "Catch & Shoot", yt: "G6E5W_fNz5Q", desc: "Pretend to catch a pass and immediately rise up and shoot!", difficulty: 2 },
+  { player: "Dr. J (Julius Erving)", move: "Finger Roll", yt: "hSxBP0lVG7g", desc: "Drive to the hoop and softly roll the ball off your fingertips!", difficulty: 3 },
+  { player: "Vince Carter", move: "360 Dunk", yt: "igKmDCr8kRY", desc: "Spin in the air and throw it down! Go big on the mini hoop!", difficulty: 4 },
+  { player: "Tony Parker", move: "Teardrop Floater", yt: "6SMnJOP_OWQ", desc: "Drive into the lane and float a soft shot over the defense!", difficulty: 3 },
+  { player: "Steve Nash", move: "Behind-the-Back Pass", yt: "PjUaGvVSjfE", desc: "Wrap the ball behind your back while driving to the hoop!", difficulty: 3 },
+  { player: "Chris Paul", move: "Hesitation Crossover", yt: "6GKXQMA_bkA", desc: "Pause like you're stopping, then quickly cross over and go!", difficulty: 3 },
+  { player: "Dwyane Wade", move: "Euro Step Slam", yt: "wPOf9Elt5hc", desc: "Euro step around the defender and finish strong!", difficulty: 3 },
+  { player: "Giannis Antetokounmpo", move: "Euro Step Dunk", yt: "9mPGwIAOaWE", desc: "Take a huge step and throw it down like the Greek Freak!", difficulty: 4 },
+  { player: "Ja Morant", move: "Poster Dunk", yt: "yRIixgPMWbg", desc: "Attack the rim full speed and throw it down with power!", difficulty: 4 },
+  { player: "Luka Doncic", move: "Step-Back Three", yt: "tPtDaFnTNkA", desc: "Dance with the ball, step way back, and pull the trigger!", difficulty: 4 },
+  { player: "Nikola Jokic", move: "Sombor Shuffle", yt: "5W0g0GLCZ_0", desc: "Shuffle at the elbow, one-legged fadeaway! The Sombor Shuffle!", difficulty: 5 },
+  { player: "Damian Lillard", move: "Logo Three", yt: "mejFtEY5faU", desc: "Step back to half court and let it fly! DAME TIME!", difficulty: 5 },
+  { player: "Carmelo Anthony", move: "Jab Step Jumper", yt: "vkB5JlU5bEY", desc: "Jab step hard, freeze the defender, then pull up!", difficulty: 3 },
+  { player: "Tracy McGrady", move: "Elbow Jumper", yt: "e3EqY5gPrcU", desc: "Get to the elbow, face up, and shoot a silky mid-range!", difficulty: 3 },
+  { player: "Scottie Pippen", move: "Coast-to-Coast Layup", yt: "AYBFp-5JbSY", desc: "Grab the rebound and go full speed end to end for a layup!", difficulty: 3 },
+  { player: "Dominique Wilkins", move: "Windmill Dunk", yt: "sw8ibMDwDr4", desc: "Wind your arm like a windmill and slam it home!", difficulty: 5 },
+  { player: "Derrick Rose", move: "Explosive Layup", yt: "uRAp00SxP30", desc: "Attack the rim at full speed with a quick explosive finish!", difficulty: 3 },
+  { player: "Russell Westbrook", move: "Tomahawk Dunk", yt: "tYpxlBCl8RA", desc: "Bring the ball way back behind your head and THROW IT DOWN!", difficulty: 4 },
+  { player: "Manu Ginobili", move: "Euro Step", yt: "F1mmMR0WfHY", desc: "The OG Euro Step! Step left then right to avoid the block!", difficulty: 3 },
+  { player: "Kevin Garnett", move: "Turnaround Jumper", yt: "jlPDNjhBkqI", desc: "Post up, spin to face the basket, and shoot over the defense!", difficulty: 3 },
+  { player: "Paul Pierce", move: "Step-Back Mid-Range", yt: "0zKsVnU6_50", desc: "Create space with a step-back and nail the mid-range!", difficulty: 3 },
+  { player: "Ray Allen", move: "Catch & Shoot Three", yt: "44T6FYdLcLc", desc: "Run to the corner, catch the pass, and shoot a quick three!", difficulty: 2 },
+  { player: "Reggie Miller", move: "Off-Screen Three", yt: "FNlFIzG3nOg", desc: "Run around an imaginary screen and shoot a quick three!", difficulty: 3 },
+  { player: "Jason Williams", move: "Elbow Pass", yt: "0N-2Tn7P4-E", desc: "Bounce the ball off your elbow for a tricky pass!", difficulty: 5 },
+  { player: "Tim Hardaway", move: "UTEP Two-Step Crossover", yt: "d9F5BZYYVBU", desc: "Hit them with a double crossover and blow right past!", difficulty: 4 },
+  { player: "Pete Maravich", move: "Behind-the-Back Pass", yt: "PoVQwnFhpCQ", desc: "Whip a no-look behind-the-back pass! Pistol Pete style!", difficulty: 4 },
+  { player: "Kawhi Leonard", move: "Mid-Range Assassin", yt: "LN4MNOuRT5Y", desc: "Get to your spot in the mid-range and drain it!", difficulty: 3 },
+  { player: "Joel Embiid", move: "Dream Shake Spin", yt: "u1me_3xaUNM", desc: "Channel Hakeem! Pump fake, spin, and finish with a hook!", difficulty: 4 },
+  { player: "DeMar DeRozan", move: "Mid-Range Footwork", yt: "DP-g_AKnrBg", desc: "Use fancy footwork in the mid-range and hit a tough shot!", difficulty: 4 },
+  { player: "Anthony Edwards", move: "Power Dunk", yt: "kMTR2Q-XjdI", desc: "Attack the rim and throw it down with authority! No mercy!", difficulty: 4 },
+  { player: "Trae Young", move: "Deep Floater", yt: "TVoGaIB8u2g", desc: "Pull up from deep and float one in from way out!", difficulty: 4 },
+  { player: "Isiah Thomas", move: "Layup Package", yt: "YBBhI1CMjzU", desc: "Drive hard and use a creative, acrobatic finish at the rim!", difficulty: 3 },
+  { player: "Charles Barkley", move: "Power Post Move", yt: "PJkSBOvTIBg", desc: "Back someone down with power and finish with strength!", difficulty: 2 },
+  { player: "Shawn Kemp", move: "Alley-Oop Slam", yt: "l2GaAWdHwsw", desc: "Toss the ball off the backboard, catch it, and slam!", difficulty: 4 },
+  { player: "George Gervin", move: "Iceman Finger Roll", yt: "1aMs6kEq98I", desc: "Glide to the basket and softly roll it in. Smooth like Ice!", difficulty: 3 },
+  { player: "Rajon Rondo", move: "Fake Pass Layup", yt: "gd6wF-fM0f0", desc: "Look like you're gonna pass, pump fake, then finish the layup!", difficulty: 2 },
+];
+
+const colors = [
+  '#C8102E', '#1D428A', '#552583', '#006BB6', '#CE1141',
+  '#007A33', '#F58426', '#860038', '#E56020', '#5D76A9',
+  '#1D1160', '#236192', '#CE1141', '#00471B', '#0C2340',
+  '#EF3B24', '#002D62', '#C8102E', '#FFC72C', '#1D428A',
+  '#00788C', '#E31837', '#002B5C', '#F9A01B', '#C8102E',
+  '#1D428A', '#552583', '#006BB6', '#CE1141', '#007A33',
+  '#F58426', '#860038', '#E56020', '#5D76A9', '#1D1160',
+  '#236192', '#CE1141', '#00471B', '#0C2340', '#EF3B24',
+  '#002D62', '#C8102E', '#FFC72C', '#1D428A', '#00788C',
+  '#E31837', '#002B5C', '#F9A01B', '#C8102E', '#1D428A'
+];
+
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+let currentAngle = 0;
+let spinning = false;
+let score = 0;
+let streak = 0;
+
+function resizeCanvas() {
+  const wrapper = document.querySelector('.wheel-wrapper');
+  const size = wrapper.clientWidth - 12;
+  canvas.width = size * 2;
+  canvas.height = size * 2;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+  drawWheel();
+}
+
+function drawWheel() {
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const r = cx - 10;
+  const segAngle = (2 * Math.PI) / moves.length;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  moves.forEach((m, i) => {
+    const startAngle = currentAngle + i * segAngle;
+    const endAngle = startAngle + segAngle;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, endAngle);
+    ctx.closePath();
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(startAngle + segAngle / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'white';
+    ctx.shadowColor = 'rgba(0,0,0,0.6)';
+    ctx.shadowBlur = 3;
+    const fontSize = Math.max(11, Math.min(16, r * 0.045));
+    ctx.font = `bold ${fontSize}px 'Oswald', sans-serif`;
+    ctx.fillText(m.player.split(' ').pop(), r - 14, fontSize * 0.35);
+    ctx.restore();
+  });
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, 52, 0, 2 * Math.PI);
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.fill();
+}
+
+function getWinningIndex() {
+  const segAngle = (2 * Math.PI) / moves.length;
+  const pointerAngle = -Math.PI / 2;
+  let norm = ((pointerAngle - currentAngle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  return Math.floor(norm / segAngle) % moves.length;
+}
+
+function spinWheel() {
+  if (spinning) return;
+  closeOverlay();
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+
+  const spinDuration = 4000 + Math.random() * 2000;
+  const totalRotation = (8 + Math.random() * 6) * Math.PI * 2;
+  const startAngle = currentAngle;
+  const startTime = performance.now();
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / spinDuration, 1);
+    currentAngle = startAngle + totalRotation * easeOut(progress);
+    drawWheel();
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      spinning = false;
+      document.getElementById('spinBtn').disabled = false;
+      showResult();
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function showResult() {
+  const idx = getWinningIndex();
+  const move = moves[idx];
+
+  document.getElementById('overlayPlayer').textContent = move.player;
+  document.getElementById('overlayMove').textContent = move.move;
+  document.getElementById('overlayDesc').textContent = move.desc;
+
+  const stars = '\u2605'.repeat(move.difficulty) + '\u2606'.repeat(5 - move.difficulty);
+  document.getElementById('overlayDifficulty').innerHTML =
+    `Difficulty: <span class="stars">${stars}</span>`;
+
+  // Embed YouTube video directly in the overlay iframe
+  document.getElementById('videoFrame').src =
+    `https://www.youtube.com/embed/${move.yt}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+
+  document.getElementById('videoOverlay').classList.add('active');
+}
+
+function closeOverlay() {
+  document.getElementById('videoOverlay').classList.remove('active');
+  document.getElementById('videoFrame').src = '';
+}
+
+function nailedIt() {
+  score++;
+  streak++;
+  document.getElementById('score').textContent = score;
+  document.getElementById('streak').textContent = streak;
+  document.getElementById('streakFire').innerHTML =
+    streak >= 5 ? '&#128293;&#128293;&#128293;' :
+    streak >= 3 ? '&#128293;&#128293;' : '&#128293;';
+  launchConfetti();
+  closeOverlay();
+}
+
+function closeAndSpin() {
+  closeOverlay();
+  setTimeout(() => spinWheel(), 400);
+}
+
+function launchConfetti() {
+  const container = document.getElementById('confetti');
+  const cols = ['#FF6B00','#FFD700','#C8102E','#1D428A','#00E676','#FF4081','#FFF'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.backgroundColor = cols[Math.floor(Math.random() * cols.length)];
+    p.style.animationDelay = Math.random() * 0.5 + 's';
+    p.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    p.style.width = (6 + Math.random() * 8) + 'px';
+    p.style.height = (6 + Math.random() * 8) + 'px';
+    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 3000);
+  }
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+</script>
+
+</body>
+</html>
