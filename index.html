@@ -14,7 +14,7 @@ html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-
 .hd .sb{font-size:clamp(.65rem,2.2vw,.9rem);color:rgba(255,255,255,.5);letter-spacing:5px;text-transform:uppercase;margin-top:4px;font-weight:500}
 .gm{display:flex;flex-direction:column;align-items:center;padding:8px 16px 24px}
 .wz{position:relative;width:84vw;max-width:440px;margin:6px auto;overflow:visible}
-.wz svg.wheel{display:block;width:100%;height:auto;border-radius:50%;overflow:hidden}
+.wz svg.wheel{display:block;width:100%;height:auto;border-radius:50%;overflow:hidden;will-change:transform}
 .pt{position:absolute;top:-12px;left:50%;margin-left:-16px;z-index:20}
 .hb{position:absolute;top:50%;left:50%;width:60px;height:60px;margin-top:-30px;margin-left:-30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,#C8102E);border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6)}
 .hb span{font-family:'Bangers','Impact',sans-serif;font-size:.8rem;letter-spacing:2px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
@@ -166,7 +166,7 @@ html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-
 <circle cx="250" cy="250" r="35" fill="rgba(0,0,0,0.5)"/>
 </svg>
 <div class="pt"><svg width="32" height="28" viewBox="0 0 32 28"><polygon points="16,28 0,0 32,0" fill="#FFD700" stroke="#b8860b" stroke-width="1"/></svg></div>
-<div class="hb" id="hub"><span>SPIN!</span></div>
+<div class="hb" id="hub" onclick="spin()"><span>SPIN!</span></div>
 <div class="rp" id="rp">
 <div class="rt"><div class="rpl" id="rpP"></div><div class="rpm" id="rpM"></div></div>
 <div class="ga" id="gifArea"></div>
@@ -244,9 +244,12 @@ var M=[
 ];
 
 var ang=0,busy=false,sc=0,sk=0,curLoad=0;
-var segs=document.getElementById(‘segs’);
+var wheelSvg=document.querySelector(‘svg.wheel’);
 
-function setRot(d){ segs.setAttribute(‘transform’,‘rotate(’+d+’,250,250)’); }
+function setRot(d){
+if(!wheelSvg)wheelSvg=document.querySelector(‘svg.wheel’);
+if(wheelSvg)wheelSvg.style.transform=‘rotate(’+d+‘deg)’;
+}
 
 function win(){
 var segA=360/M.length;
