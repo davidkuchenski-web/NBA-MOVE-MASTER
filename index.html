@@ -13,8 +13,7 @@ html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-
 .hd h1{font-family:'Bangers','Impact',sans-serif;font-size:clamp(2rem,8vw,3.5rem);letter-spacing:3px;color:#FFD700;text-shadow:0 0 30px rgba(255,215,0,.3),0 2px 16px rgba(255,107,0,.5);line-height:1}
 .hd .sb{font-size:clamp(.65rem,2.2vw,.9rem);color:rgba(255,255,255,.5);letter-spacing:5px;text-transform:uppercase;margin-top:4px;font-weight:500}
 .gm{display:flex;flex-direction:column;align-items:center;padding:8px 16px 24px}
-.wz{position:relative;width:min(84vw,440px);margin:6px auto}
-.wz svg.wheel{width:100%;height:auto;display:block;border-radius:50%}
+.wz{position:relative;margin:6px auto;overflow:visible}
 .pt{position:absolute;top:-12px;left:50%;margin-left:-16px;z-index:20}
 .hb{position:absolute;top:50%;left:50%;margin-top:-30px;margin-left:-30px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,#C8102E);border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6)}
 .hb span{font-family:'Bangers','Impact',sans-serif;font-size:.8rem;letter-spacing:2px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
@@ -140,92 +139,76 @@ var M=[
 var C=[’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’];
 
 var ang=0,busy=false,sc=0,sk=0,curLoad=0;
-var svgEl=null,gSegments=null;
+var gSegments=null;
+var WHEEL_PX=300; /* will be calculated */
 
-/* ===== BUILD SVG WHEEL (no canvas!) ===== */
 function buildWheel(){
-var ns=‘http://www.w3.org/2000/svg’;
+/* Calculate pixel size */
+var vw=window.innerWidth||screen.width||375;
+WHEEL_PX=Math.min(Math.floor(vw*0.84),440);
+
+/* Set container size explicitly in pixels */
+var wz=document.getElementById(‘wz’);
+wz.style.width=WHEEL_PX+‘px’;
+wz.style.height=WHEEL_PX+‘px’;
+
+var wrap=document.getElementById(‘wheelWrap’);
+wrap.style.width=WHEEL_PX+‘px’;
+wrap.style.height=WHEEL_PX+‘px’;
+wrap.style.position=‘absolute’;
+wrap.style.top=‘0’;
+wrap.style.left=‘0’;
+
+/* Build SVG as a string and inject via innerHTML (most compatible) */
 var size=500,cx=250,cy=250,r=240;
-var svg=document.createElementNS(ns,‘svg’);
-svg.setAttribute(‘viewBox’,’0 0 ‘+size+’ ’+size);
-svg.setAttribute(‘class’,‘wheel’);
-svg.style.width=‘100%’;
-svg.style.height=‘auto’;
-svg.style.display=‘block’;
-svg.style.borderRadius=‘50%’;
-
-/* Background circle */
-var bg=document.createElementNS(ns,‘circle’);
-bg.setAttribute(‘cx’,cx);bg.setAttribute(‘cy’,cy);bg.setAttribute(‘r’,cx);
-bg.setAttribute(‘fill’,’#08080e’);
-svg.appendChild(bg);
-
-/* Glow ring */
-var ring=document.createElementNS(ns,‘circle’);
-ring.setAttribute(‘cx’,cx);ring.setAttribute(‘cy’,cy);ring.setAttribute(‘r’,cx-3);
-ring.setAttribute(‘fill’,‘none’);ring.setAttribute(‘stroke’,‘rgba(255,107,0,0.35)’);ring.setAttribute(‘stroke-width’,‘3’);
-svg.appendChild(ring);
-
-/* Segments group - we rotate this */
-var g=document.createElementNS(ns,‘g’);
-g.setAttribute(‘id’,‘segs’);
 var n=M.length;
 var segAngle=360/n;
+var html=’<svg xmlns="http://www.w3.org/2000/svg" width="'+WHEEL_PX+'" height="'+WHEEL_PX+'" viewBox="0 0 500 500" style="display:block;border-radius:50%;">’;
 
+/* Background */
+html+=’<circle cx="250" cy="250" r="250" fill="#08080e"/>’;
+html+=’<circle cx="250" cy="250" r="247" fill="none" stroke="rgba(255,107,0,0.35)" stroke-width="3"/>’;
+
+/* Segments group */
+html+=’<g id="segs">’;
 for(var i=0;i<n;i++){
 var a1=(i*segAngle-90)*Math.PI/180;
 var a2=((i+1)*segAngle-90)*Math.PI/180;
 var x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
 var x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
-var large=segAngle>180?1:0;
 
 ```
-/* Segment path */
-var path=document.createElementNS(ns,'path');
-path.setAttribute('d','M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 '+large+',1 '+x2+','+y2+' Z');
-path.setAttribute('fill',C[i%C.length]);
-path.setAttribute('stroke','rgba(0,0,0,0.3)');
-path.setAttribute('stroke-width','0.5');
-g.appendChild(path);
+html+='<path d="M'+cx+','+cy+' L'+x1.toFixed(2)+','+y1.toFixed(2)+' A'+r+','+r+' 0 0,1 '+x2.toFixed(2)+','+y2.toFixed(2)+' Z" fill="'+C[i%C.length]+'" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>';
 
-/* Text label */
 var midA=((i+0.5)*segAngle-90)*Math.PI/180;
 var tr=r*0.72;
-var tx=cx+tr*Math.cos(midA);
-var ty=cy+tr*Math.sin(midA);
-var textRotation=i*segAngle+segAngle/2;
+var tx=(cx+tr*Math.cos(midA)).toFixed(2);
+var ty=(cy+tr*Math.sin(midA)).toFixed(2);
+var rot=i*segAngle+segAngle/2;
 
-var txt=document.createElementNS(ns,'text');
-txt.setAttribute('x',tx);txt.setAttribute('y',ty);
-txt.setAttribute('text-anchor','middle');
-txt.setAttribute('dominant-baseline','central');
-txt.setAttribute('transform','rotate('+textRotation+','+tx+','+ty+')');
-txt.setAttribute('fill','#fff');
-txt.setAttribute('font-family','Oswald,Arial Black,sans-serif');
-txt.setAttribute('font-weight','700');
-txt.setAttribute('font-size','11');
-txt.setAttribute('stroke','rgba(0,0,0,0.8)');
-txt.setAttribute('stroke-width','2.5');
-txt.setAttribute('paint-order','stroke');
-txt.textContent=M[i].ln;
-g.appendChild(txt);
+html+='<text x="'+tx+'" y="'+ty+'" text-anchor="middle" dominant-baseline="central" transform="rotate('+rot.toFixed(2)+','+tx+','+ty+')" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.8)" stroke-width="2.5" paint-order="stroke">'+escHtml(M[i].ln)+'</text>';
 ```
 
 }
-svg.appendChild(g);
+html+=’</g>’;
 
-/* Center hub background */
-var hub=document.createElementNS(ns,‘circle’);
-hub.setAttribute(‘cx’,cx);hub.setAttribute(‘cy’,cy);hub.setAttribute(‘r’,‘35’);
-hub.setAttribute(‘fill’,‘rgba(0,0,0,0.5)’);
-svg.appendChild(hub);
+/* Center hub bg */
+html+=’<circle cx="250" cy="250" r="35" fill="rgba(0,0,0,0.5)"/>’;
+html+=’</svg>’;
 
-var wrap=document.getElementById(‘wheelWrap’);
-wrap.innerHTML=’’;
-wrap.appendChild(svg);
-svgEl=svg;
-gSegments=g;
+wrap.innerHTML=html;
+gSegments=document.getElementById(‘segs’);
+
+/* Also reposition hub button */
+var hubSize=Math.max(52,Math.floor(WHEEL_PX*0.14));
+var hubEl=document.getElementById(‘hub’);
+hubEl.style.width=hubSize+‘px’;
+hubEl.style.height=hubSize+‘px’;
+hubEl.style.marginTop=(-hubSize/2)+‘px’;
+hubEl.style.marginLeft=(-hubSize/2)+‘px’;
 }
+
+function escHtml(s){return s.replace(/&/g,’&’).replace(/</g,’<’).replace(/>/g,’>’).replace(/”/g,’"’);}
 
 function setRotation(degrees){
 if(gSegments){
@@ -236,8 +219,7 @@ gSegments.setAttribute(‘transform’,‘rotate(’+degrees+’,250,250)’);
 function win(){
 var segAngle=360/M.length;
 var normDeg=((ang%360)+360)%360;
-var idx=Math.floor((360-normDeg)/segAngle)%M.length;
-return idx;
+return Math.floor((360-normDeg)/segAngle)%M.length;
 }
 
 function spin(){
@@ -249,8 +231,7 @@ var startAng=ang;
 var t0=performance.now();
 (function f(now){
 var p=Math.min((now-t0)/dur,1);
-var ease=1-Math.pow(1-p,4);
-ang=startAng+rot*ease;
+ang=startAng+rot*(1-Math.pow(1-p,4));
 setRotation(ang);
 if(p<1)requestAnimationFrame(f);
 else{busy=false;document.getElementById(‘spn’).disabled=false;show();}
@@ -332,6 +313,9 @@ for(var i=0;i<45;i++){var e=document.createElement(‘div’);e.className=‘cf�
 }
 
 document.getElementById(‘hub’).onclick=spin;
+window.addEventListener(‘resize’,function(){buildWheel();setRotation(ang);});
+
+/* Build immediately */
 buildWheel();
 </script>
 
