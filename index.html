@@ -9,24 +9,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Bangers&display=swap');
 :root{--o:#FF6B00;--dk:#0a0a14;--g:#FFD700;--r:#C8102E}
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{background:var(--dk);color:#fff;font-family:'Oswald','Arial Black',sans-serif;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent}
-body{background:linear-gradient(170deg,#0d0d1a 0%,#1a0a00 30%,#0d0d1a 50%,#0a0014 70%,#0d0d1a 100%);background-attachment:fixed}
-body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(ellipse 80% 50% at 50% 110%,rgba(255,107,0,.06),transparent),
-  radial-gradient(ellipse 60% 40% at 50% -10%,rgba(200,16,46,.05),transparent),
-  repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px),
-  repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px);
-pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;top:50%;left:50%;width:200px;height:200px;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.015);border-radius:50%;pointer-events:none;z-index:0}
+html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-serif;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent}
 .hd{text-align:center;padding:20px 16px 4px;position:relative;z-index:1}
 .hd h1{font-family:'Bangers','Impact',sans-serif;font-size:clamp(2rem,8vw,3.5rem);letter-spacing:3px;color:var(--g);text-shadow:0 0 30px rgba(255,215,0,.3),0 2px 16px rgba(255,107,0,.5);line-height:1}
 .hd .sb{font-size:clamp(.65rem,2.2vw,.9rem);color:rgba(255,255,255,.5);letter-spacing:5px;text-transform:uppercase;margin-top:4px;font-weight:500}
 .gm{display:flex;flex-direction:column;align-items:center;padding:8px 16px 24px;position:relative;z-index:1}
-.wz{position:relative;width:min(84vw,440px);aspect-ratio:1;margin:6px auto}
-.gr{position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,var(--o),var(--g),var(--o),var(--r),var(--o));opacity:.4;animation:p 3s ease-in-out infinite}
-@keyframes p{0%,100%{opacity:.35}50%{opacity:.6}}
-.wb{position:absolute;inset:2px;border-radius:50%;background:#08080e;box-shadow:inset 0 0 30px rgba(0,0,0,.5)}
-canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);border-radius:50%}
+/* Wheel container: use padding-bottom for Safari aspect-ratio fallback */
+.wz{position:relative;width:min(84vw,440px);margin:6px auto}
+.wz::before{content:'';display:block;padding-bottom:100%}
+/* Glow ring - simple box-shadow, no filter, no animation */
+.gr{position:absolute;inset:-10px;border-radius:50%;border:3px solid rgba(255,107,0,.3);box-shadow:0 0 30px rgba(255,107,0,.2),0 0 60px rgba(255,107,0,.1),inset 0 0 30px rgba(255,107,0,.1)}
+/* Dark background circle */
+.wb{position:absolute;inset:2px;border-radius:50%;background:#08080e;z-index:1}
+/* Canvas gets explicit z-index above .wb */
+canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);border-radius:50%;z-index:2}
 .pt{position:absolute;top:-12px;left:50%;transform:translateX(-50%);z-index:20}
 .hb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(52px,14vw,70px);height:clamp(52px,14vw,70px);border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,var(--r));border:3px solid var(--g);display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6);transition:transform .15s}
 .hb:active{transform:translate(-50%,-50%) scale(.92)}
@@ -54,10 +50,10 @@ canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px
 .bn{color:#111;background:linear-gradient(135deg,#00E676,#00C853)}
 .bb{color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)!important}
 .bx{color:#111;background:linear-gradient(135deg,var(--g),var(--o))}
-.sp{display:block;margin:10px auto 0;padding:14px 50px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(1rem,4vw,1.4rem);letter-spacing:4px;color:#111;background:linear-gradient(135deg,var(--g),var(--o));border:none;border-radius:30px;cursor:pointer;box-shadow:0 4px 25px rgba(255,107,0,.4),0 0 60px rgba(255,215,0,.1);transition:transform .15s}
+.sp{display:block;margin:10px auto 0;padding:14px 50px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(1rem,4vw,1.4rem);letter-spacing:4px;color:#111;background:linear-gradient(135deg,var(--g),var(--o));border:none;border-radius:30px;cursor:pointer;box-shadow:0 4px 25px rgba(255,107,0,.4);transition:transform .15s}
 .sp:active{transform:scale(.96)}
 .sp:disabled{opacity:.5;cursor:not-allowed}
-.sc{display:flex;gap:20px;justify-content:center;margin-top:12px;padding:8px 24px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,215,0,.12);backdrop-filter:blur(8px)}
+.sc{display:flex;gap:20px;justify-content:center;margin-top:12px;padding:8px 24px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,215,0,.12)}
 .st{display:flex;align-items:center;gap:5px}
 .l{font-size:clamp(.6rem,1.8vw,.75rem);color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;font-weight:700}
 .n{font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.1rem,4vw,1.5rem);color:var(--g);text-shadow:0 0 10px rgba(255,215,0,.3)}
@@ -97,16 +93,16 @@ canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px
 </div>
 <div class="cb" id="cb"></div>
 <script>
-const M=[
+var M=[
 {p:"Kareem Abdul-Jabbar",ln:"Abdul-Jabbar",m:"Sky Hook",d:"Shoot a hook shot reaching HIGH overhead!",s:3,tk:"7067228818930683183",gq:"kareem sky hook NBA"},
-{p:"Michael Jordan",ln:"Jordan",m:"Fadeaway Jumper",d:"Jump backward while shooting — lean back like MJ!",s:4,yt:"uj1Hw4xgC_Q",tk:"7405975450943507742",gq:"michael jordan fadeaway"},
+{p:"Michael Jordan",ln:"Jordan",m:"Fadeaway Jumper",d:"Jump backward while shooting — lean back like MJ!",s:4,yt:"uj1Hw4xgC_Q",gq:"michael jordan fadeaway"},
 {p:"Hakeem Olajuwon",ln:"Olajuwon",m:"Dream Shake",d:"Fake one way, spin the other, finish!",s:5,tk:"7233834962867260699",gq:"hakeem dream shake"},
 {p:"Dirk Nowitzki",ln:"Nowitzki",m:"One-Leg Fadeaway",d:"One leg, lean back, shoot over the defense!",s:4,tk:"7448026248074251551",gq:"dirk nowitzki fadeaway"},
 {p:"Allen Iverson",ln:"Iverson",m:"Killer Crossover",d:"Cross the ball hard left to right and blow by!",s:3,tk:"7276877007835663659",gq:"allen iverson crossover"},
 {p:"Steph Curry",ln:"Curry",m:"Deep Three",d:"Pull up from WAY behind the arc!",s:4,tk:"7490380783501315358",gq:"steph curry deep three"},
-{p:"LeBron James",ln:"LeBron",m:"Euro Step Layup",d:"Big step left, then right, finish at the rim!",s:3,yt:"x78KIrkzgew",tk:"7429940021714570538",gq:"lebron euro step"},
+{p:"LeBron James",ln:"LeBron",m:"Euro Step Layup",d:"Big step left, then right, finish at the rim!",s:3,yt:"x78KIrkzgew",gq:"lebron euro step"},
 {p:"Kobe Bryant",ln:"Kobe",m:"Turnaround Fadeaway",d:"Spin baseline, fade away, shoot. Mamba style!",s:5,tk:"7418449907540888839",gq:"kobe bryant fadeaway"},
-{p:"Kyrie Irving",ln:"Kyrie",m:"Spin Move Finish",d:"360 spin past the defender and finish at the rim!",s:4,yt:"PPwZN5G50gg",tk:"7438443404515806510",gq:"kyrie irving handles"},
+{p:"Kyrie Irving",ln:"Kyrie",m:"Spin Move Finish",d:"360 spin past the defender and finish at the rim!",s:4,yt:"PPwZN5G50gg",gq:"kyrie irving handles"},
 {p:"James Harden",ln:"Harden",m:"Step-Back Three",d:"Dribble forward, giant step back, pull the trigger!",s:3,yt:"w6p-UJJntgE",gq:"james harden step back"},
 {p:"Magic Johnson",ln:"Magic",m:"No-Look Pass",d:"Look one way, pass the other — sell the fake!",s:2,gq:"magic johnson no look pass"},
 {p:"Tim Duncan",ln:"Duncan",m:"Bank Shot",d:"Use the backboard every time — aim for the square!",s:2,gq:"tim duncan bank shot"},
@@ -147,166 +143,138 @@ const M=[
 {p:"Charles Barkley",ln:"Sir Charles",m:"Power Post Move",d:"Back them down with brute force and finish!",s:2,gq:"charles barkley dunk"},
 {p:"Shawn Kemp",ln:"Kemp",m:"Alley-Oop Slam",d:"Catch the lob and SLAM it with authority!",s:4,gq:"shawn kemp alley oop dunk"},
 {p:"George Gervin",ln:"Iceman",m:"Finger Roll",d:"Glide to the hoop, softly roll it off your fingers!",s:3,gq:"george gervin finger roll"},
-{p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",d:"Fake the pass perfectly, then finish yourself!",s:2,gq:"rajon rondo fake pass"},
+{p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",d:"Fake the pass perfectly, then finish yourself!",s:2,gq:"rajon rondo fake pass"}
 ];
 
-const C=[’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’];
+var C=[’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’];
 
-const cv=document.getElementById(‘c’),x=cv.getContext(‘2d’);
-let ang=0,busy=false,sc=0,sk=0,curLoad=0;
+var cv=document.getElementById(‘c’),x=cv.getContext(‘2d’);
+var ang=0,busy=false,sc=0,sk=0,curLoad=0;
 
-function sz(){const w=document.getElementById(‘wz’).clientWidth-8;cv.width=w*2;cv.height=w*2;cv.style.width=w+‘px’;cv.style.height=w+‘px’;draw();}
+function sz(){
+var wzEl=document.getElementById(‘wz’);
+var w=wzEl.offsetWidth-8;
+if(w<50)w=300; /* Safety fallback */
+/* Set canvas pixel buffer */
+var dpr=window.devicePixelRatio||1;
+cv.width=w*dpr;
+cv.height=w*dpr;
+cv.style.width=w+‘px’;
+cv.style.height=w+‘px’;
+x.setTransform(dpr,0,0,dpr,0,0);
+draw();
+}
 
 function draw(){
-const cx=cv.width/2,cy=cv.height/2,r=cx-4,sg=(2*Math.PI)/M.length;
-x.clearRect(0,0,cv.width,cv.height);
-M.forEach((_,i)=>{
-const a1=ang+i*sg,a2=a1+sg;
+var w=cv.width/(window.devicePixelRatio||1);
+var cx=w/2,cy=w/2,r=cx-4;
+var sg=(2*Math.PI)/M.length;
+x.clearRect(0,0,w,w);
+for(var i=0;i<M.length;i++){
+var a1=ang+i*sg,a2=a1+sg;
 x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,r,a1,a2);x.closePath();
 x.fillStyle=C[i%C.length];x.fill();
 x.strokeStyle=‘rgba(0,0,0,.3)’;x.lineWidth=1;x.stroke();
 x.save();x.translate(cx,cy);x.rotate(a1+sg/2);
 x.textAlign=‘right’;x.textBaseline=‘middle’;
-const fs=Math.max(10,Math.min(15,r*.042));
+var fs=Math.max(10,Math.min(15,r*.042));
 x.font=‘700 ‘+fs+‘px Oswald,Arial Black,sans-serif’;
-const nm=M[i].ln,tx=r-10;
+var nm=M[i].ln,tx=r-10;
 x.strokeStyle=‘rgba(0,0,0,.85)’;x.lineWidth=3;x.lineJoin=‘round’;x.strokeText(nm,tx,0);
 x.fillStyle=’#fff’;x.fillText(nm,tx,0);
 x.restore();
-});
+}
 x.beginPath();x.arc(cx,cy,36,0,2*Math.PI);x.fillStyle=‘rgba(0,0,0,.5)’;x.fill();
 }
 
-function win(){const sg=(2*Math.PI)/M.length;let n=((-Math.PI/2-ang)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);return Math.floor(n/sg)%M.length;}
+function win(){var sg=(2*Math.PI)/M.length;var n=((-Math.PI/2-ang)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);return Math.floor(n/sg)%M.length;}
 
 function spin(){
 if(busy)return;cls();busy=true;
 document.getElementById(‘spn’).disabled=true;
-const dur=4000+Math.random()*2500,rot=(8+Math.random()*7)*Math.PI*2,s=ang,t0=performance.now();
+var dur=4000+Math.random()*2500,rot=(8+Math.random()*7)*Math.PI*2,s=ang,t0=performance.now();
 (function f(now){
-const p=Math.min((now-t0)/dur,1);
+var p=Math.min((now-t0)/dur,1);
 ang=s+rot*(1-Math.pow(1-p,4));draw();
 if(p<1)requestAnimationFrame(f);
 else{busy=false;document.getElementById(‘spn’).disabled=false;show();}
 })(t0);
 }
 
-/* ===== VIDEO LOADING SYSTEM ===== */
-
+/* ===== VIDEO LOADING ===== */
 function loadVideo(mv,ga,loadId){
 ga.innerHTML=’<div class="ld"><span class="ball">\u{1F3C0}</span>LOADING…</div>’;
-
-/* Priority 1: YouTube (high quality ESPN content) */
 if(mv.yt){
-const iframe=document.createElement(‘iframe’);
+var iframe=document.createElement(‘iframe’);
 iframe.src=‘https://www.youtube.com/embed/’+mv.yt+’?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1’;
 iframe.allow=‘autoplay;encrypted-media’;
 iframe.allowFullscreen=true;
 iframe.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
-iframe.onload=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(iframe);}};
-/* Also try TikTok in parallel as backup */
-if(mv.tk){
-setTimeout(function(){
-if(curLoad===loadId && ga.querySelector(’.ld’)){
-loadTikTok(mv,ga,loadId);
-}
-},3000);
-}
 ga.innerHTML=’’;ga.appendChild(iframe);
 return;
 }
-
-/* Priority 2: TikTok */
 if(mv.tk){
-loadTikTok(mv,ga,loadId);
+var iframe2=document.createElement(‘iframe’);
+iframe2.src=‘https://www.tiktok.com/player/v1/’+mv.tk+’?music_info=0&description=0&autoplay=1&loop=1’;
+iframe2.allow=‘autoplay’;
+iframe2.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
+ga.innerHTML=’’;ga.appendChild(iframe2);
 return;
 }
-
-/* Priority 3: Giphy search */
 loadGiphy(mv,ga,loadId);
-}
-
-function loadTikTok(mv,ga,loadId){
-const iframe=document.createElement(‘iframe’);
-iframe.src=‘https://www.tiktok.com/player/v1/’+mv.tk+’?music_info=0&description=0&autoplay=1&loop=1’;
-iframe.allow=‘autoplay’;
-iframe.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
-iframe.onload=function(){
-if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(iframe);}
-};
-ga.innerHTML=’’;ga.appendChild(iframe);
-/* Giphy fallback if TikTok takes too long */
-setTimeout(function(){
-if(curLoad===loadId && !ga.querySelector(‘iframe’)){
-loadGiphy(mv,ga,loadId);
-}
-},5000);
 }
 
 function loadGiphy(mv,ga,loadId){
-const q=encodeURIComponent(mv.gq||mv.p+’ ‘+mv.m);
+var q=encodeURIComponent(mv.gq||mv.p+’ ‘+mv.m);
 fetch(‘https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=’+q+’&limit=3&rating=g’)
 .then(function(r){return r.json();})
 .then(function(data){
 if(curLoad!==loadId)return;
 if(data.data&&data.data.length>0){
-var gif=data.data[0];
-var mp4Url=null,gifUrl=null;
-try{mp4Url=gif.images.original.mp4;}catch(e){}
+var gif=data.data[0];var mp4=null,gifUrl=null;
+try{mp4=gif.images.original.mp4;}catch(e){}
 try{gifUrl=gif.images.fixed_height.url;}catch(e){}
 if(!gifUrl)try{gifUrl=gif.images.original.url;}catch(e){}
-
-```
-    if(mp4Url){
-      var vid=document.createElement('video');
-      vid.autoplay=true;vid.loop=true;vid.muted=true;vid.playsInline=true;
-      vid.setAttribute('playsinline','');
-      vid.src=mp4Url;
-      vid.onloadeddata=function(){if(curLoad===loadId){ga.innerHTML='';ga.appendChild(vid);vid.play().catch(function(){});}};
-      vid.onerror=function(){
-        if(gifUrl&&curLoad===loadId){
-          var img=new Image();img.src=gifUrl;
-          img.onload=function(){if(curLoad===loadId){ga.innerHTML='';ga.appendChild(img);}};
-          img.onerror=function(){showFallback(mv,ga);};
-        } else showFallback(mv,ga);
-      };
-    } else if(gifUrl){
-      var img=new Image();img.src=gifUrl;
-      img.onload=function(){if(curLoad===loadId){ga.innerHTML='';ga.appendChild(img);}};
-      img.onerror=function(){showFallback(mv,ga);};
-    } else showFallback(mv,ga);
-  } else showFallback(mv,ga);
-})
-.catch(function(){if(curLoad===loadId)showFallback(mv,ga);});
-```
-
+if(mp4){
+var vid=document.createElement(‘video’);
+vid.autoplay=true;vid.loop=true;vid.muted=true;vid.playsInline=true;
+vid.setAttribute(‘playsinline’,’’);vid.src=mp4;
+vid.onloadeddata=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(vid);vid.play().catch(function(){});}};
+vid.onerror=function(){
+if(gifUrl&&curLoad===loadId){var img=new Image();img.src=gifUrl;img.onload=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(img);}};img.onerror=function(){showFB(mv,ga);};}
+else showFB(mv,ga);
+};
+} else if(gifUrl){
+var img=new Image();img.src=gifUrl;
+img.onload=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(img);}};
+img.onerror=function(){showFB(mv,ga);};
+} else showFB(mv,ga);
+} else showFB(mv,ga);
+}).catch(function(){if(curLoad===loadId)showFB(mv,ga);});
 }
 
-function showFallback(mv,ga){
-ga.innerHTML=’<div style="text-align:center;padding:20px"><div style="font-size:4rem;animation:bounce .6s ease-in-out infinite alternate">\u{1F3C0}</div><div style="font-family:Bangers,sans-serif;font-size:1.3rem;color:var(--g);margin-top:10px;letter-spacing:2px">’+mv.m.toUpperCase()+’</div><div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px;letter-spacing:1px">SHOW US YOUR MOVE!</div></div>’;
+function showFB(mv,ga){
+ga.innerHTML=’<div style="text-align:center;padding:20px"><div style="font-size:4rem;animation:bounce .6s ease-in-out infinite alternate">\u{1F3C0}</div><div style="font-family:Bangers,sans-serif;font-size:1.3rem;color:#FFD700;margin-top:10px;letter-spacing:2px">’+mv.m.toUpperCase()+’</div><div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px">SHOW US YOUR MOVE!</div></div>’;
 }
-
-/* ===== END VIDEO SYSTEM ===== */
 
 function show(){
-const mv=M[win()];
+var mv=M[win()];
 document.getElementById(‘rpP’).textContent=mv.p;
 document.getElementById(‘rpM’).textContent=mv.m;
 document.getElementById(‘rpD’).textContent=mv.d;
-const on=’\u2605’,off=’\u2606’;
+var on=’\u2605’,off=’\u2606’;
 document.getElementById(‘rpS’).innerHTML=‘Difficulty: <span class="on">’+on.repeat(mv.s)+’</span>’+off.repeat(5-mv.s);
-const ga=document.getElementById(‘gifArea’);
-ga.innerHTML=’’;
-curLoad++;
+var ga=document.getElementById(‘gifArea’);
+ga.innerHTML=’’;curLoad++;
 document.getElementById(‘rp’).classList.add(‘on’);
 loadVideo(mv,ga,curLoad);
 }
 
 function cls(){
 curLoad++;
-const ga=document.getElementById(‘gifArea’);
-ga.querySelectorAll(‘video’).forEach(function(v){v.pause();v.src=’’;});
-ga.querySelectorAll(‘iframe’).forEach(function(f){f.src=’’;f.remove();});
+var ga=document.getElementById(‘gifArea’);
+var vids=ga.querySelectorAll(‘video’);for(var i=0;i<vids.length;i++){vids[i].pause();vids[i].src=’’;}
+var ifs=ga.querySelectorAll(‘iframe’);for(var j=0;j<ifs.length;j++){ifs[j].src=’’;ifs[j].remove();}
 ga.innerHTML=’’;
 document.getElementById(‘rp’).classList.remove(‘on’);
 }
@@ -321,15 +289,15 @@ boom();cls();
 function nxt(){cls();setTimeout(spin,350);}
 
 function boom(){
-const b=document.getElementById(‘cb’);
-const cc=[’#FF6B00’,’#FFD700’,’#C8102E’,’#1D428A’,’#00E676’,’#FF4081’,’#fff’];
-for(let i=0;i<45;i++){
-const e=document.createElement(‘div’);e.className=‘cf’;
+var b=document.getElementById(‘cb’);
+var cc=[’#FF6B00’,’#FFD700’,’#C8102E’,’#1D428A’,’#00E676’,’#FF4081’,’#fff’];
+for(var i=0;i<45;i++){
+var e=document.createElement(‘div’);e.className=‘cf’;
 e.style.left=Math.random()*100+’%’;
 e.style.backgroundColor=cc[~~(Math.random()*cc.length)];
 e.style.animationDelay=Math.random()*.4+‘s’;
 e.style.animationDuration=(2+Math.random()*1.5)+‘s’;
-const z=5+Math.random()*7;
+var z=5+Math.random()*7;
 e.style.width=z+‘px’;e.style.height=z+‘px’;
 e.style.borderRadius=Math.random()>.5?‘50%’:‘2px’;
 b.appendChild(e);setTimeout(function(){e.remove();},3000);
@@ -338,7 +306,9 @@ b.appendChild(e);setTimeout(function(){e.remove();},3000);
 
 document.getElementById(‘hub’).onclick=spin;
 window.addEventListener(‘resize’,sz);
-sz();
+/* Delay initial draw to ensure layout is complete on mobile Safari */
+setTimeout(sz,100);
+setTimeout(sz,500);
 </script>
 
 </body>
