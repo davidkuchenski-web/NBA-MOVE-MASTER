@@ -13,9 +13,10 @@ html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-
 .hd h1{font-family:'Bangers','Impact',sans-serif;font-size:clamp(2rem,8vw,3.5rem);letter-spacing:3px;color:#FFD700;text-shadow:0 0 30px rgba(255,215,0,.3),0 2px 16px rgba(255,107,0,.5);line-height:1}
 .hd .sb{font-size:clamp(.65rem,2.2vw,.9rem);color:rgba(255,255,255,.5);letter-spacing:5px;text-transform:uppercase;margin-top:4px;font-weight:500}
 .gm{display:flex;flex-direction:column;align-items:center;padding:8px 16px 24px}
-.wz{position:relative;margin:6px auto;overflow:visible}
+.wz{position:relative;width:84vw;max-width:440px;margin:6px auto;overflow:visible}
+.wz svg.wheel{display:block;width:100%;height:auto;border-radius:50%;overflow:hidden}
 .pt{position:absolute;top:-12px;left:50%;margin-left:-16px;z-index:20}
-.hb{position:absolute;top:50%;left:50%;margin-top:-30px;margin-left:-30px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,#C8102E);border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6)}
+.hb{position:absolute;top:50%;left:50%;width:60px;height:60px;margin-top:-30px;margin-left:-30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,#C8102E);border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6)}
 .hb span{font-family:'Bangers','Impact',sans-serif;font-size:.8rem;letter-spacing:2px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .rp{position:absolute;inset:0;z-index:30;display:none;flex-direction:column;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#0d0d1a 0%,#111118 50%,#0d0d1a 100%);border:2px solid rgba(255,107,0,.3);box-shadow:0 0 60px rgba(255,107,0,.15)}
 .rp.on{display:flex;animation:pop .4s cubic-bezier(.16,1,.3,1)}
@@ -57,7 +58,113 @@ html,body{background:#0a0a14;color:#fff;font-family:'Oswald','Arial Black',sans-
 <div class="hd"><h1>NBA MOVE MASTER</h1><div class="sb">Mini Hoop Challenge</div></div>
 <div class="gm">
 <div class="wz" id="wz">
-<div id="wheelWrap"></div>
+<svg class="wheel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+<circle cx="250" cy="250" r="250" fill="#08080e"/>
+<circle cx="250" cy="250" r="247" fill="none" stroke="rgba(255,107,0,0.35)" stroke-width="3"/>
+<g id="segs">
+<path d="M250,250 L250.0,10.0 A240,240 0 0,1 280.1,11.9 Z" fill="#C8102E" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L280.1,11.9 A240,240 0 0,1 309.7,17.5 Z" fill="#1D428A" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L309.7,17.5 A240,240 0 0,1 338.3,26.9 Z" fill="#552583" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L338.3,26.9 A240,240 0 0,1 365.6,39.7 Z" fill="#007A33" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L365.6,39.7 A240,240 0 0,1 391.1,55.8 Z" fill="#CE1141" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L391.1,55.8 A240,240 0 0,1 414.3,75.0 Z" fill="#006BB6" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L414.3,75.0 A240,240 0 0,1 434.9,97.0 Z" fill="#F58426" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L434.9,97.0 A240,240 0 0,1 452.6,121.4 Z" fill="#860038" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L452.6,121.4 A240,240 0 0,1 467.2,147.8 Z" fill="#E56020" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L467.2,147.8 A240,240 0 0,1 478.3,175.8 Z" fill="#00471B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L478.3,175.8 A240,240 0 0,1 485.7,205.0 Z" fill="#1D1160" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L485.7,205.0 A240,240 0 0,1 489.5,234.9 Z" fill="#236192" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L489.5,234.9 A240,240 0 0,1 489.5,265.1 Z" fill="#EF3B24" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L489.5,265.1 A240,240 0 0,1 485.7,295.0 Z" fill="#002D62" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L485.7,295.0 A240,240 0 0,1 478.3,324.2 Z" fill="#FFC72C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L478.3,324.2 A240,240 0 0,1 467.2,352.2 Z" fill="#00788C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L467.2,352.2 A240,240 0 0,1 452.6,378.6 Z" fill="#E31837" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L452.6,378.6 A240,240 0 0,1 434.9,403.0 Z" fill="#002B5C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L434.9,403.0 A240,240 0 0,1 414.3,425.0 Z" fill="#F9A01B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L414.3,425.0 A240,240 0 0,1 391.1,444.2 Z" fill="#5D76A9" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L391.1,444.2 A240,240 0 0,1 365.6,460.3 Z" fill="#C8102E" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L365.6,460.3 A240,240 0 0,1 338.3,473.1 Z" fill="#1D428A" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L338.3,473.1 A240,240 0 0,1 309.7,482.5 Z" fill="#552583" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L309.7,482.5 A240,240 0 0,1 280.1,488.1 Z" fill="#007A33" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L280.1,488.1 A240,240 0 0,1 250.0,490.0 Z" fill="#CE1141" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L250.0,490.0 A240,240 0 0,1 219.9,488.1 Z" fill="#006BB6" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L219.9,488.1 A240,240 0 0,1 190.3,482.5 Z" fill="#F58426" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L190.3,482.5 A240,240 0 0,1 161.7,473.1 Z" fill="#860038" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L161.7,473.1 A240,240 0 0,1 134.4,460.3 Z" fill="#E56020" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L134.4,460.3 A240,240 0 0,1 108.9,444.2 Z" fill="#00471B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L108.9,444.2 A240,240 0 0,1 85.7,425.0 Z" fill="#1D1160" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L85.7,425.0 A240,240 0 0,1 65.1,403.0 Z" fill="#236192" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L65.1,403.0 A240,240 0 0,1 47.4,378.6 Z" fill="#EF3B24" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L47.4,378.6 A240,240 0 0,1 32.8,352.2 Z" fill="#002D62" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L32.8,352.2 A240,240 0 0,1 21.7,324.2 Z" fill="#FFC72C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L21.7,324.2 A240,240 0 0,1 14.3,295.0 Z" fill="#00788C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L14.3,295.0 A240,240 0 0,1 10.5,265.1 Z" fill="#E31837" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L10.5,265.1 A240,240 0 0,1 10.5,234.9 Z" fill="#002B5C" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L10.5,234.9 A240,240 0 0,1 14.3,205.0 Z" fill="#F9A01B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L14.3,205.0 A240,240 0 0,1 21.7,175.8 Z" fill="#5D76A9" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L21.7,175.8 A240,240 0 0,1 32.8,147.8 Z" fill="#C8102E" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L32.8,147.8 A240,240 0 0,1 47.4,121.4 Z" fill="#1D428A" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L47.4,121.4 A240,240 0 0,1 65.1,97.0 Z" fill="#552583" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L65.1,97.0 A240,240 0 0,1 85.7,75.0 Z" fill="#007A33" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L85.7,75.0 A240,240 0 0,1 108.9,55.8 Z" fill="#CE1141" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L108.9,55.8 A240,240 0 0,1 134.4,39.7 Z" fill="#006BB6" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L134.4,39.7 A240,240 0 0,1 161.7,26.9 Z" fill="#F58426" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L161.7,26.9 A240,240 0 0,1 190.3,17.5 Z" fill="#860038" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L190.3,17.5 A240,240 0 0,1 219.9,11.9 Z" fill="#E56020" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<path d="M250,250 L219.9,11.9 A240,240 0 0,1 250.0,10.0 Z" fill="#00471B" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-86.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Abdul-Jabbar</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-79.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Jordan</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-72.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Olajuwon</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-64.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Nowitzki</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-57.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Iverson</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-50.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Curry</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-43.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">LeBron</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-36.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kobe</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-28.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kyrie</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-21.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Harden</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-14.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Magic</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(-7.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Duncan</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(0.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Durant</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(7.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Shaq</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(14.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Bird</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(21.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Dr. J</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(28.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Vinsanity</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(36.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Parker</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(43.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Nash</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(50.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">CP3</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(57.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Wade</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(64.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Giannis</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(72.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Ja</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(79.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Luka</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(86.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Jokic</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(93.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Dame</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(100.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Melo</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(108.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">T-Mac</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(115.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Pippen</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(122.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">&#39;Nique</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(129.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">D-Rose</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(136.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Russ</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(144.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Manu</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(151.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">KG</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(158.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Pierce</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(165.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Ray</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(172.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Reggie</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(180.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">J-Will</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(187.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Hardaway</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(194.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Pistol Pete</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(201.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kawhi</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(208.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Embiid</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(216.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">DeRozan</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(223.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Ant-Man</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(230.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Trae</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(237.60,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Zeke</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(244.80,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Sir Charles</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(252.00,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Kemp</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(259.20,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Iceman</text>
+<text x="480" y="250" text-anchor="end" dominant-baseline="central" transform="rotate(266.40,250,250)" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.7)" stroke-width="2.5" paint-order="stroke">Rondo</text>
+</g>
+<circle cx="250" cy="250" r="35" fill="rgba(0,0,0,0.5)"/>
+</svg>
 <div class="pt"><svg width="32" height="28" viewBox="0 0 32 28"><polygon points="16,28 0,0 32,0" fill="#FFD700" stroke="#b8860b" stroke-width="1"/></svg></div>
 <div class="hb" id="hub"><span>SPIN!</span></div>
 <div class="rp" id="rp">
@@ -136,109 +243,31 @@ var M=[
 {p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",d:"Fake the pass perfectly, then finish yourself!",s:2,gq:"rajon rondo fake pass"}
 ];
 
-var C=[’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’];
-
 var ang=0,busy=false,sc=0,sk=0,curLoad=0;
-var gSegments=null;
-var WHEEL_PX=300; /* will be calculated */
+var segs=document.getElementById(‘segs’);
 
-function buildWheel(){
-/* Calculate pixel size */
-var vw=window.innerWidth||screen.width||375;
-WHEEL_PX=Math.min(Math.floor(vw*0.84),440);
-
-/* Set container size explicitly in pixels */
-var wz=document.getElementById(‘wz’);
-wz.style.width=WHEEL_PX+‘px’;
-wz.style.height=WHEEL_PX+‘px’;
-
-var wrap=document.getElementById(‘wheelWrap’);
-wrap.style.width=WHEEL_PX+‘px’;
-wrap.style.height=WHEEL_PX+‘px’;
-wrap.style.position=‘absolute’;
-wrap.style.top=‘0’;
-wrap.style.left=‘0’;
-
-/* Build SVG as a string and inject via innerHTML (most compatible) */
-var size=500,cx=250,cy=250,r=240;
-var n=M.length;
-var segAngle=360/n;
-var html=’<svg xmlns="http://www.w3.org/2000/svg" width="'+WHEEL_PX+'" height="'+WHEEL_PX+'" viewBox="0 0 500 500" style="display:block;border-radius:50%;">’;
-
-/* Background */
-html+=’<circle cx="250" cy="250" r="250" fill="#08080e"/>’;
-html+=’<circle cx="250" cy="250" r="247" fill="none" stroke="rgba(255,107,0,0.35)" stroke-width="3"/>’;
-
-/* Segments group */
-html+=’<g id="segs">’;
-for(var i=0;i<n;i++){
-var a1=(i*segAngle-90)*Math.PI/180;
-var a2=((i+1)*segAngle-90)*Math.PI/180;
-var x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
-var x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
-
-```
-html+='<path d="M'+cx+','+cy+' L'+x1.toFixed(2)+','+y1.toFixed(2)+' A'+r+','+r+' 0 0,1 '+x2.toFixed(2)+','+y2.toFixed(2)+' Z" fill="'+C[i%C.length]+'" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>';
-
-/* Place text at 3-o'clock near rim, then rotate into segment position */
-var textX=cx+r-12;
-var textY=cy;
-var rotDeg=i*segAngle+segAngle/2-90;
-
-html+='<text x="'+textX+'" y="'+textY+'" text-anchor="end" dominant-baseline="central" transform="rotate('+rotDeg.toFixed(2)+','+cx+','+cy+')" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.8)" stroke-width="2.5" paint-order="stroke">'+escHtml(M[i].ln)+'</text>';
-```
-
-}
-html+=’</g>’;
-
-/* Center hub bg */
-html+=’<circle cx="250" cy="250" r="35" fill="rgba(0,0,0,0.5)"/>’;
-html+=’</svg>’;
-
-wrap.innerHTML=html;
-gSegments=document.getElementById(‘segs’);
-
-/* Also reposition hub button */
-var hubSize=Math.max(52,Math.floor(WHEEL_PX*0.14));
-var hubEl=document.getElementById(‘hub’);
-hubEl.style.width=hubSize+‘px’;
-hubEl.style.height=hubSize+‘px’;
-hubEl.style.marginTop=(-hubSize/2)+‘px’;
-hubEl.style.marginLeft=(-hubSize/2)+‘px’;
-}
-
-function escHtml(s){return s.replace(/&/g,’&’).replace(/</g,’<’).replace(/>/g,’>’).replace(/”/g,’"’);}
-
-function setRotation(degrees){
-if(gSegments){
-gSegments.setAttribute(‘transform’,‘rotate(’+degrees+’,250,250)’);
-}
-}
+function setRot(d){ segs.setAttribute(‘transform’,‘rotate(’+d+’,250,250)’); }
 
 function win(){
-var segAngle=360/M.length;
-var normDeg=((ang%360)+360)%360;
-return Math.floor((360-normDeg)/segAngle)%M.length;
+var segA=360/M.length;
+var nd=((ang%360)+360)%360;
+return Math.floor((360-nd)/segA)%M.length;
 }
 
 function spin(){
 if(busy)return;cls();busy=true;
 document.getElementById(‘spn’).disabled=true;
-var dur=4000+Math.random()*2500;
-var rot=360*(8+Math.random()*7);
-var startAng=ang;
-var t0=performance.now();
+var dur=4000+Math.random()*2500,rot=360*(8+Math.random()*7),s=ang,t0=performance.now();
 (function f(now){
 var p=Math.min((now-t0)/dur,1);
-ang=startAng+rot*(1-Math.pow(1-p,4));
-setRotation(ang);
+ang=s+rot*(1-Math.pow(1-p,4));setRot(ang);
 if(p<1)requestAnimationFrame(f);
 else{busy=false;document.getElementById(‘spn’).disabled=false;show();}
 })(t0);
 }
 
 function loadVideo(mv,ga,loadId){
-ga.innerHTML=’<div class="ld"><span class="ball">\u{1F3C0}</span>LOADING…</div>’;
+ga.innerHTML=’<div class="ld"><span class="ball">🏀</span>LOADING…</div>’;
 if(mv.yt){
 var ifr=document.createElement(‘iframe’);
 ifr.src=‘https://www.youtube.com/embed/’+mv.yt+’?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1’;
@@ -282,14 +311,14 @@ img.onerror=function(){showFB(mv,ga);};
 }).catch(function(){if(curLoad===loadId)showFB(mv,ga);});
 }
 
-function showFB(mv,ga){ga.innerHTML=’<div style="text-align:center;padding:20px"><div style="font-size:4rem;animation:bounce .6s ease-in-out infinite alternate">\u{1F3C0}</div><div style="font-family:Bangers,sans-serif;font-size:1.3rem;color:#FFD700;margin-top:10px;letter-spacing:2px">’+mv.m.toUpperCase()+’</div><div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px">SHOW US YOUR MOVE!</div></div>’;}
+function showFB(mv,ga){ga.innerHTML=’<div style="text-align:center;padding:20px"><div style="font-size:4rem;animation:bounce .6s ease-in-out infinite alternate">🏀</div><div style="font-family:Bangers,sans-serif;font-size:1.3rem;color:#FFD700;margin-top:10px;letter-spacing:2px">’+mv.m.toUpperCase()+’</div><div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px">SHOW US YOUR MOVE!</div></div>’;}
 
 function show(){
 var mv=M[win()];
 document.getElementById(‘rpP’).textContent=mv.p;
 document.getElementById(‘rpM’).textContent=mv.m;
 document.getElementById(‘rpD’).textContent=mv.d;
-document.getElementById(‘rpS’).innerHTML=‘Difficulty: <span class="on">’+’\u2605’.repeat(mv.s)+’</span>’+’\u2606’.repeat(5-mv.s);
+document.getElementById(‘rpS’).innerHTML=‘Difficulty: <span class="on">’+‘★’.repeat(mv.s)+’</span>’+‘☆’.repeat(5-mv.s);
 var ga=document.getElementById(‘gifArea’);ga.innerHTML=’’;curLoad++;
 document.getElementById(‘rp’).classList.add(‘on’);
 loadVideo(mv,ga,curLoad);
@@ -312,10 +341,6 @@ for(var i=0;i<45;i++){var e=document.createElement(‘div’);e.className=‘cf�
 }
 
 document.getElementById(‘hub’).onclick=spin;
-window.addEventListener(‘resize’,function(){buildWheel();setRotation(ang);});
-
-/* Build immediately */
-buildWheel();
 </script>
 
 </body>
