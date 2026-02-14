@@ -180,13 +180,12 @@ var x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
 ```
 html+='<path d="M'+cx+','+cy+' L'+x1.toFixed(2)+','+y1.toFixed(2)+' A'+r+','+r+' 0 0,1 '+x2.toFixed(2)+','+y2.toFixed(2)+' Z" fill="'+C[i%C.length]+'" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>';
 
-var midA=((i+0.5)*segAngle-90)*Math.PI/180;
-var tr=r*0.72;
-var tx=(cx+tr*Math.cos(midA)).toFixed(2);
-var ty=(cy+tr*Math.sin(midA)).toFixed(2);
-var rot=i*segAngle+segAngle/2;
+/* Place text at 3-o'clock near rim, then rotate into segment position */
+var textX=cx+r-12;
+var textY=cy;
+var rotDeg=i*segAngle+segAngle/2-90;
 
-html+='<text x="'+tx+'" y="'+ty+'" text-anchor="middle" dominant-baseline="central" transform="rotate('+rot.toFixed(2)+','+tx+','+ty+')" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.8)" stroke-width="2.5" paint-order="stroke">'+escHtml(M[i].ln)+'</text>';
+html+='<text x="'+textX+'" y="'+textY+'" text-anchor="end" dominant-baseline="central" transform="rotate('+rotDeg.toFixed(2)+','+cx+','+cy+')" fill="#fff" font-family="Oswald,Arial Black,sans-serif" font-weight="700" font-size="11" stroke="rgba(0,0,0,0.8)" stroke-width="2.5" paint-order="stroke">'+escHtml(M[i].ln)+'</text>';
 ```
 
 }
