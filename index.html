@@ -11,7 +11,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:var(--dk);color:#fff;font-family:'Oswald','Arial Black',sans-serif;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent}
 body{background:linear-gradient(170deg,#0d0d1a 0%,#1a0a00 30%,#0d0d1a 50%,#0a0014 70%,#0d0d1a 100%);background-attachment:fixed}
-/* Court lines background texture */
 body::before{content:'';position:fixed;inset:0;background:
   radial-gradient(ellipse 80% 50% at 50% 110%,rgba(255,107,0,.06),transparent),
   radial-gradient(ellipse 60% 40% at 50% -10%,rgba(200,16,46,.05),transparent),
@@ -32,47 +31,40 @@ canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px
 .hb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(52px,14vw,70px);height:clamp(52px,14vw,70px);border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8c00,var(--r));border:3px solid var(--g);display:flex;align-items:center;justify-content:center;z-index:15;cursor:pointer;box-shadow:0 0 20px rgba(255,107,0,.6);transition:transform .15s}
 .hb:active{transform:translate(-50%,-50%) scale(.92)}
 .hb span{font-family:'Bangers','Impact',sans-serif;font-size:clamp(.65rem,2.2vw,.85rem);letter-spacing:2px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
-/* Result panel - covers wheel area */
 .rp{position:absolute;inset:-2px;z-index:30;display:none;flex-direction:column;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#0d0d1a 0%,#111118 50%,#0d0d1a 100%);border:2px solid rgba(255,107,0,.3);box-shadow:0 0 60px rgba(255,107,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
 .rp.on{display:flex;animation:pop .4s cubic-bezier(.16,1,.3,1)}
 @keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-.rt{text-align:center;padding:14px 12px 6px;flex-shrink:0;background:linear-gradient(180deg,rgba(255,107,0,.12),transparent)}
-.rpl{font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.4rem,5vw,2rem);color:var(--g);text-shadow:0 2px 10px rgba(255,107,0,.4);line-height:1.1}
-.rpm{font-size:clamp(.7rem,2vw,.85rem);color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:3px;margin-top:3px}
-.rpb{display:inline-block;margin-top:5px;padding:2px 10px;background:var(--r);border-radius:10px;font-family:'Bangers','Impact',sans-serif;font-size:.6rem;letter-spacing:2px;color:#fff}
-/* Video area */
-.vb{flex:1;min-height:0;margin:8px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.vb iframe{width:100%;flex:1;min-height:180px;max-height:300px;border:none;border-radius:8px;background:#000}
-.tk-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#000;border:2px solid #fe2c55;border-radius:30px;color:#fff;text-decoration:none;font-family:'Bangers','Impact',sans-serif;font-size:clamp(1rem,3vw,1.2rem);letter-spacing:2px;transition:all .2s;box-shadow:0 0 20px rgba(254,44,85,.2)}
-.tk-btn:hover,.tk-btn:active{transform:scale(.97);background:#1a1a1a;border-color:#ff3b5c}
-.tk-logo{display:flex;align-items:center;gap:4px}
-.tk-logo svg{width:22px;height:22px}
-.tk-note{font-size:clamp(.5rem,1.4vw,.65rem);color:rgba(255,255,255,.25);margin-top:0}
-/* Bottom section */
-.rb{flex-shrink:0;padding:6px 10px 12px;text-align:center}
-.rd{font-size:clamp(.7rem,1.8vw,.85rem);color:rgba(255,255,255,.6);line-height:1.4;margin-bottom:5px}
-.rs{font-size:.8rem;color:rgba(255,255,255,.35);margin-bottom:6px}
+.rt{text-align:center;padding:12px 12px 4px;flex-shrink:0;background:linear-gradient(180deg,rgba(255,107,0,.12),transparent)}
+.rpl{font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.3rem,4.5vw,1.8rem);color:var(--g);text-shadow:0 2px 10px rgba(255,107,0,.4);line-height:1.1}
+.rpm{font-size:clamp(.65rem,1.8vw,.8rem);color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:3px;margin-top:2px}
+.ga{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 10px;overflow:hidden;position:relative}
+.ga iframe{width:100%;height:100%;border:0;border-radius:10px;background:#000}
+.ga video,.ga img{max-width:100%;max-height:100%;border-radius:10px;object-fit:contain;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.ga .ld{color:rgba(255,255,255,.25);font-size:.7rem;letter-spacing:2px;text-align:center}
+.ga .ld .ball{font-size:1.5rem;display:block;margin-bottom:4px;animation:bounce .6s ease-in-out infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.rb{flex-shrink:0;padding:6px 10px 10px;text-align:center}
+.rd{font-size:clamp(.7rem,1.8vw,.85rem);color:rgba(255,255,255,.6);line-height:1.4;margin-bottom:4px}
+.rs{font-size:.75rem;color:rgba(255,255,255,.35);margin-bottom:5px}
 .rs .on{color:var(--g)}
+.rpb{display:inline-block;margin-bottom:4px;padding:2px 10px;background:var(--r);border-radius:10px;font-family:'Bangers','Impact',sans-serif;font-size:.55rem;letter-spacing:2px;color:#fff}
 .rbs{display:flex;gap:5px;justify-content:center;flex-wrap:wrap}
 .rbs button{padding:7px 16px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(.8rem,2.4vw,.95rem);letter-spacing:1.5px;border:none;border-radius:18px;cursor:pointer;transition:transform .1s}
 .rbs button:active{transform:scale(.95)}
 .bn{color:#111;background:linear-gradient(135deg,#00E676,#00C853)}
 .bb{color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)!important}
 .bx{color:#111;background:linear-gradient(135deg,var(--g),var(--o))}
-/* Spin button + score */
-.sp{margin-top:16px;padding:14px 50px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.3rem,4.5vw,1.7rem);letter-spacing:4px;color:#111;background:linear-gradient(135deg,var(--g),var(--o));border:none;border-radius:36px;cursor:pointer;box-shadow:0 4px 25px rgba(255,107,0,.4),0 0 60px rgba(255,215,0,.1);transition:transform .15s}
+.sp{display:block;margin:10px auto 0;padding:14px 50px;font-family:'Bangers','Impact',sans-serif;font-size:clamp(1rem,4vw,1.4rem);letter-spacing:4px;color:#111;background:linear-gradient(135deg,var(--g),var(--o));border:none;border-radius:30px;cursor:pointer;box-shadow:0 4px 25px rgba(255,107,0,.4),0 0 60px rgba(255,215,0,.1);transition:transform .15s}
 .sp:active{transform:scale(.96)}
-.sp:disabled{opacity:.4;pointer-events:none}
-.sc{display:flex;gap:20px;margin-top:14px;padding:8px 24px;background:rgba(255,255,255,.07);border-radius:24px;border:1px solid rgba(255,215,0,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.st{display:flex;align-items:center;gap:6px}
-.st .l{font-size:.65rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;font-weight:700}
-.st .n{font-family:'Bangers','Impact',sans-serif;font-size:1.4rem;color:var(--g);text-shadow:0 0 10px rgba(255,215,0,.3)}
-.st .i{font-size:1.1rem}
-/* Confetti */
-.cb{position:fixed;inset:0;pointer-events:none;z-index:200}
-.cf{position:absolute;top:-10px;animation:fl 2.5s ease-in forwards}
-@keyframes fl{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
-@media(max-width:400px){.wz{width:92vw}.rbs button{padding:6px 12px;font-size:.78rem}.tk-btn{padding:10px 18px;font-size:.9rem}}
+.sp:disabled{opacity:.5;cursor:not-allowed}
+.sc{display:flex;gap:20px;justify-content:center;margin-top:12px;padding:8px 24px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,215,0,.12);backdrop-filter:blur(8px)}
+.st{display:flex;align-items:center;gap:5px}
+.l{font-size:clamp(.6rem,1.8vw,.75rem);color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:2px;font-weight:700}
+.n{font-family:'Bangers','Impact',sans-serif;font-size:clamp(1.1rem,4vw,1.5rem);color:var(--g);text-shadow:0 0 10px rgba(255,215,0,.3)}
+.i{font-size:clamp(.9rem,3vw,1.1rem)}
+.cb{position:fixed;top:0;left:0;width:100%;pointer-events:none;z-index:100}
+.cf{position:absolute;top:-10px;width:8px;height:8px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
@@ -83,9 +75,10 @@ canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px
 <div class="pt"><svg width="32" height="28" viewBox="0 0 32 28"><polygon points="16,28 0,0 32,0" fill="#FFD700" stroke="#b8860b" stroke-width="1"/></svg></div>
 <div class="hb" id="hub"><span>SPIN!</span></div>
 <div class="rp" id="rp">
-<div class="rt"><div class="rpl" id="rpP"></div><div class="rpm" id="rpM"></div><div class="rpb">YOUR CHALLENGE</div></div>
-<div class="vb" id="vidArea"></div>
+<div class="rt"><div class="rpl" id="rpP"></div><div class="rpm" id="rpM"></div></div>
+<div class="ga" id="gifArea"></div>
 <div class="rb">
+<div class="rpb">YOUR CHALLENGE</div>
 <div class="rd" id="rpD"></div>
 <div class="rs" id="rpS"></div>
 <div class="rbs">
@@ -105,69 +98,64 @@ canvas{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px
 <div class="cb" id="cb"></div>
 <script>
 const M=[
-{p:"Kareem Abdul-Jabbar",ln:"Abdul-Jabbar",m:"Sky Hook",tk:"7067228818930683183",tku:"nba",q:"kareem+abdul+jabbar+sky+hook",d:"Shoot a hook shot reaching HIGH overhead!",s:3},
-{p:"Michael Jordan",ln:"Jordan",m:"Fadeaway Jumper",tk:"7405975450943507742",tku:"distantreplay",q:"michael+jordan+fadeaway+jumper",d:"Jump backward while shooting — lean back like MJ!",s:4},
-{p:"Hakeem Olajuwon",ln:"Olajuwon",m:"Dream Shake",tk:"7233834962867260699",tku:"nevernot_ballin",q:"hakeem+olajuwon+dream+shake",d:"Fake one way, spin the other, finish!",s:5},
-{p:"Dirk Nowitzki",ln:"Nowitzki",m:"One-Leg Fadeaway",tk:"7448026248074251551",tku:"stak5",q:"dirk+nowitzki+one+leg+fadeaway",d:"One leg, lean back, shoot over the defense!",s:4},
-{p:"Allen Iverson",ln:"Iverson",m:"Killer Crossover",tk:"7276877007835663659",tku:"nba",q:"allen+iverson+crossover",d:"Cross the ball hard left to right and blow by!",s:3},
-{p:"Steph Curry",ln:"Curry",m:"Deep Three",tk:"7490380783501315358",tku:"nba",q:"steph+curry+deep+three",d:"Pull up from WAY behind the arc!",s:4},
-{p:"LeBron James",ln:"LeBron",m:"Euro Step Layup",tk:"7429940021714570538",tku:"nba",q:"lebron+james+euro+step",d:"Big step left, then right, finish at the rim!",s:3},
-{p:"Kobe Bryant",ln:"Kobe",m:"Turnaround Fadeaway",tk:"7418449907540888839",tku:"nbabasketballmoves",q:"kobe+bryant+turnaround+fadeaway",d:"Spin baseline, fade away, shoot. Mamba style!",s:5},
-{p:"Kyrie Irving",ln:"Kyrie",m:"Spin Move Finish",tk:"7438443404515806510",tku:"nba",q:"kyrie+irving+spin+move",d:"360 spin past the defender and finish at the rim!",s:4},
-{p:"James Harden",ln:"Harden",m:"Step-Back Three",tk:"",tku:"",q:"james+harden+step+back+three",d:"Dribble forward, giant step back, pull the trigger!",s:3},
-{p:"Magic Johnson",ln:"Magic",m:"No-Look Pass",tk:"",tku:"",q:"magic+johnson+no+look+pass",d:"Look one way, pass the other — sell the fake!",s:2},
-{p:"Tim Duncan",ln:"Duncan",m:"Bank Shot",tk:"",tku:"",q:"tim+duncan+bank+shot+nba",d:"Use the backboard every time — aim for the square!",s:2},
-{p:"Kevin Durant",ln:"Durant",m:"Pull-Up Mid-Range",tk:"",tku:"",q:"kevin+durant+mid+range+jumper",d:"Dribble to the elbow, rise up smooth and shoot!",s:3},
-{p:"Shaquille O'Neal",ln:"Shaq",m:"Drop Step Dunk",tk:"",tku:"",q:"shaq+drop+step+dunk",d:"Power dribble in the post, drop step, GO UP STRONG!",s:3},
-{p:"Larry Bird",ln:"Bird",m:"Catch & Shoot",tk:"",tku:"",q:"larry+bird+catch+and+shoot+three",d:"Catch the pass and shoot in one fluid motion!",s:2},
-{p:"Julius Erving",ln:"Dr. J",m:"Baseline Finger Roll",tk:"",tku:"",q:"julius+erving+finger+roll+dr+j",d:"Drive baseline and softly roll it off your fingers!",s:3},
-{p:"Vince Carter",ln:"Vinsanity",m:"360 Windmill Dunk",tk:"",tku:"",q:"vince+carter+360+dunk",d:"Spin full 360 in the air and SLAM it home!",s:5},
-{p:"Tony Parker",ln:"Parker",m:"Teardrop Floater",tk:"",tku:"",q:"tony+parker+teardrop+floater",d:"Float a soft shot high over the defense!",s:3},
-{p:"Steve Nash",ln:"Nash",m:"Behind-the-Back Pass",tk:"",tku:"",q:"steve+nash+behind+the+back+pass",d:"Wrap the ball behind your back to a teammate!",s:3},
-{p:"Chris Paul",ln:"CP3",m:"Hesitation Crossover",tk:"",tku:"",q:"chris+paul+crossover+hesitation",d:"Pause with a hesitation, then cross and go!",s:3},
-{p:"Dwyane Wade",ln:"Wade",m:"Euro Step Slam",tk:"",tku:"",q:"dwyane+wade+euro+step+dunk",d:"Euro step through traffic and slam it home!",s:3},
-{p:"Giannis Antetokounmpo",ln:"Giannis",m:"Euro Step Dunk",tk:"",tku:"",q:"giannis+euro+step+dunk",d:"One massive step and throw it DOWN!",s:4},
-{p:"Ja Morant",ln:"Ja",m:"Poster Dunk",tk:"",tku:"",q:"ja+morant+poster+dunk+highlights",d:"Full speed to the rim — DUNK ON SOMEBODY!",s:4},
-{p:"Luka Doncic",ln:"Luka",m:"Step-Back Three",tk:"",tku:"",q:"luka+doncic+step+back+three",d:"Step way back behind the arc and pull the trigger!",s:4},
-{p:"Nikola Jokic",ln:"Jokic",m:"Sombor Shuffle",tk:"",tku:"",q:"jokic+sombor+shuffle",d:"Shuffle your feet, one-legged fadeaway!",s:5},
-{p:"Damian Lillard",ln:"Dame",m:"Logo Three",tk:"",tku:"",q:"damian+lillard+logo+three+dame+time",d:"From the LOGO — it's DAME TIME!",s:5},
-{p:"Carmelo Anthony",ln:"Melo",m:"Jab Step Jumper",tk:"",tku:"",q:"carmelo+anthony+jab+step+jumper",d:"Triple threat, jab hard, freeze defender, pull up!",s:3},
-{p:"Tracy McGrady",ln:"T-Mac",m:"Elbow Jumper",tk:"",tku:"",q:"tracy+mcgrady+scoring+highlights",d:"Face up at the elbow, smooth mid-range!",s:3},
-{p:"Scottie Pippen",ln:"Pippen",m:"Coast-to-Coast Slam",tk:"",tku:"",q:"scottie+pippen+coast+to+coast",d:"Grab the rebound and go full court for the slam!",s:3},
-{p:"Dominique Wilkins",ln:"'Nique",m:"Windmill Dunk",tk:"",tku:"",q:"dominique+wilkins+windmill+dunk",d:"Wind your arm around and SLAM it home!",s:5},
-{p:"Derrick Rose",ln:"D-Rose",m:"Explosive Layup",tk:"",tku:"",q:"derrick+rose+explosive+layup+MVP",d:"Explode to the rim with a quick finish!",s:3},
-{p:"Russell Westbrook",ln:"Russ",m:"Tomahawk Dunk",tk:"",tku:"",q:"russell+westbrook+tomahawk+dunk",d:"Ball behind head, cock back, SLAM IT!",s:4},
-{p:"Manu Ginobili",ln:"Manu",m:"Euro Step",tk:"",tku:"",q:"manu+ginobili+euro+step+nba",d:"The OG Euro Step — step left then right!",s:3},
-{p:"Kevin Garnett",ln:"KG",m:"Turnaround Jumper",tk:"",tku:"",q:"kevin+garnett+turnaround+jumper",d:"Post up, turnaround, shoot over the defense!",s:3},
-{p:"Paul Pierce",ln:"Pierce",m:"Step-Back Mid",tk:"",tku:"",q:"paul+pierce+clutch+mid+range",d:"Step back and nail the clutch mid-range!",s:3},
-{p:"Ray Allen",ln:"Ray",m:"Catch & Shoot 3",tk:"",tku:"",q:"ray+allen+catch+shoot+three+pointer",d:"Sprint off the screen, catch, and shoot!",s:2},
-{p:"Reggie Miller",ln:"Reggie",m:"Off-Screen 3",tk:"",tku:"",q:"reggie+miller+three+pointer+clutch",d:"Run around a screen and nail the three!",s:3},
-{p:"Jason Williams",ln:"J-Will",m:"Elbow Pass",tk:"",tku:"",q:"jason+williams+white+chocolate+elbow+pass",d:"Bounce the ball off your elbow — playground legend!",s:5},
-{p:"Tim Hardaway",ln:"Hardaway",m:"UTEP Two-Step",tk:"",tku:"",q:"tim+hardaway+killer+crossover+UTEP",d:"Double crossover and blow past your defender!",s:4},
-{p:"Pete Maravich",ln:"Pistol Pete",m:"Behind-Back Dribble",tk:"",tku:"",q:"pete+maravich+pistol+pete+highlights",d:"Fancy behind-the-back dribble moves!",s:4},
-{p:"Kawhi Leonard",ln:"Kawhi",m:"Mid-Range Assassin",tk:"",tku:"",q:"kawhi+leonard+mid+range+playoffs",d:"Get to your spot, rise up, drain it. Ice cold!",s:3},
-{p:"Joel Embiid",ln:"Embiid",m:"Post Spin Move",tk:"",tku:"",q:"joel+embiid+post+moves+spin",d:"Pump fake, spin baseline, finish!",s:4},
-{p:"DeMar DeRozan",ln:"DeRozan",m:"Footwork Fadeaway",tk:"",tku:"",q:"demar+derozan+mid+range+footwork",d:"Fancy footwork in the post, hit a tough jumper!",s:4},
-{p:"Anthony Edwards",ln:"Ant-Man",m:"Power Dunk",tk:"",tku:"",q:"anthony+edwards+dunk+highlights",d:"Attack the rim full speed and THROW IT DOWN!",s:4},
-{p:"Trae Young",ln:"Trae",m:"Deep Floater",tk:"",tku:"",q:"trae+young+floater+highlights",d:"Pull up from deep and float one in softly!",s:4},
-{p:"Isiah Thomas",ln:"Zeke",m:"Acrobatic Layup",tk:"",tku:"",q:"isiah+thomas+pistons+layup+nba",d:"Creative, acrobatic finish around the rim!",s:3},
-{p:"Charles Barkley",ln:"Sir Charles",m:"Power Post Move",tk:"",tku:"",q:"charles+barkley+post+moves+dunks",d:"Back them down with brute force and finish!",s:2},
-{p:"Shawn Kemp",ln:"Kemp",m:"Alley-Oop Slam",tk:"",tku:"",q:"shawn+kemp+alley+oop+dunk",d:"Catch the lob and SLAM it with authority!",s:4},
-{p:"George Gervin",ln:"Iceman",m:"Finger Roll",tk:"",tku:"",q:"george+gervin+iceman+finger+roll",d:"Glide to the hoop, softly roll it off your fingers!",s:3},
-{p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",tk:"",tku:"",q:"rajon+rondo+fake+pass+layup",d:"Fake the pass perfectly, then finish yourself!",s:2},
+{p:"Kareem Abdul-Jabbar",ln:"Abdul-Jabbar",m:"Sky Hook",d:"Shoot a hook shot reaching HIGH overhead!",s:3,tk:"7067228818930683183",gq:"kareem sky hook NBA"},
+{p:"Michael Jordan",ln:"Jordan",m:"Fadeaway Jumper",d:"Jump backward while shooting — lean back like MJ!",s:4,yt:"uj1Hw4xgC_Q",tk:"7405975450943507742",gq:"michael jordan fadeaway"},
+{p:"Hakeem Olajuwon",ln:"Olajuwon",m:"Dream Shake",d:"Fake one way, spin the other, finish!",s:5,tk:"7233834962867260699",gq:"hakeem dream shake"},
+{p:"Dirk Nowitzki",ln:"Nowitzki",m:"One-Leg Fadeaway",d:"One leg, lean back, shoot over the defense!",s:4,tk:"7448026248074251551",gq:"dirk nowitzki fadeaway"},
+{p:"Allen Iverson",ln:"Iverson",m:"Killer Crossover",d:"Cross the ball hard left to right and blow by!",s:3,tk:"7276877007835663659",gq:"allen iverson crossover"},
+{p:"Steph Curry",ln:"Curry",m:"Deep Three",d:"Pull up from WAY behind the arc!",s:4,tk:"7490380783501315358",gq:"steph curry deep three"},
+{p:"LeBron James",ln:"LeBron",m:"Euro Step Layup",d:"Big step left, then right, finish at the rim!",s:3,yt:"x78KIrkzgew",tk:"7429940021714570538",gq:"lebron euro step"},
+{p:"Kobe Bryant",ln:"Kobe",m:"Turnaround Fadeaway",d:"Spin baseline, fade away, shoot. Mamba style!",s:5,tk:"7418449907540888839",gq:"kobe bryant fadeaway"},
+{p:"Kyrie Irving",ln:"Kyrie",m:"Spin Move Finish",d:"360 spin past the defender and finish at the rim!",s:4,yt:"PPwZN5G50gg",tk:"7438443404515806510",gq:"kyrie irving handles"},
+{p:"James Harden",ln:"Harden",m:"Step-Back Three",d:"Dribble forward, giant step back, pull the trigger!",s:3,yt:"w6p-UJJntgE",gq:"james harden step back"},
+{p:"Magic Johnson",ln:"Magic",m:"No-Look Pass",d:"Look one way, pass the other — sell the fake!",s:2,gq:"magic johnson no look pass"},
+{p:"Tim Duncan",ln:"Duncan",m:"Bank Shot",d:"Use the backboard every time — aim for the square!",s:2,gq:"tim duncan bank shot"},
+{p:"Kevin Durant",ln:"Durant",m:"Pull-Up Mid-Range",d:"Dribble to the elbow, rise up smooth and shoot!",s:3,gq:"kevin durant midrange"},
+{p:"Shaquille O'Neal",ln:"Shaq",m:"Drop Step Dunk",d:"Power dribble in the post, drop step, GO UP STRONG!",s:3,gq:"shaquille oneal dunk"},
+{p:"Larry Bird",ln:"Bird",m:"Catch & Shoot",d:"Catch the pass and shoot in one fluid motion!",s:2,gq:"larry bird three pointer"},
+{p:"Julius Erving",ln:"Dr. J",m:"Baseline Finger Roll",d:"Drive baseline and softly roll it off your fingers!",s:3,gq:"julius erving finger roll"},
+{p:"Vince Carter",ln:"Vinsanity",m:"360 Windmill Dunk",d:"Spin full 360 in the air and SLAM it home!",s:5,gq:"vince carter dunk contest"},
+{p:"Tony Parker",ln:"Parker",m:"Teardrop Floater",d:"Float a soft shot high over the defense!",s:3,gq:"tony parker floater"},
+{p:"Steve Nash",ln:"Nash",m:"Behind-the-Back Pass",d:"Wrap the ball behind your back to a teammate!",s:3,gq:"steve nash behind back pass"},
+{p:"Chris Paul",ln:"CP3",m:"Hesitation Crossover",d:"Pause with a hesitation, then cross and go!",s:3,gq:"chris paul crossover"},
+{p:"Dwyane Wade",ln:"Wade",m:"Euro Step Slam",d:"Euro step through traffic and slam it home!",s:3,gq:"dwyane wade euro step"},
+{p:"Giannis Antetokounmpo",ln:"Giannis",m:"Euro Step Dunk",d:"One massive step and throw it DOWN!",s:4,yt:"9jtOOQ43yw4",gq:"giannis euro step dunk"},
+{p:"Ja Morant",ln:"Ja",m:"Poster Dunk",d:"Full speed to the rim — DUNK ON SOMEBODY!",s:4,gq:"ja morant poster dunk"},
+{p:"Luka Doncic",ln:"Luka",m:"Step-Back Three",d:"Step way back behind the arc and pull the trigger!",s:4,gq:"luka doncic step back three"},
+{p:"Nikola Jokic",ln:"Jokic",m:"Sombor Shuffle",d:"Shuffle your feet, one-legged fadeaway!",s:5,gq:"jokic sombor shuffle"},
+{p:"Damian Lillard",ln:"Dame",m:"Logo Three",d:"From the LOGO — it's DAME TIME!",s:5,gq:"damian lillard logo three"},
+{p:"Carmelo Anthony",ln:"Melo",m:"Jab Step Jumper",d:"Triple threat, jab hard, freeze defender, pull up!",s:3,gq:"carmelo anthony jab step"},
+{p:"Tracy McGrady",ln:"T-Mac",m:"Elbow Jumper",d:"Face up at the elbow, smooth mid-range!",s:3,gq:"tracy mcgrady jumper NBA"},
+{p:"Scottie Pippen",ln:"Pippen",m:"Coast-to-Coast Slam",d:"Grab the rebound and go full court for the slam!",s:3,gq:"scottie pippen dunk"},
+{p:"Dominique Wilkins",ln:"'Nique",m:"Windmill Dunk",d:"Wind your arm around and SLAM it home!",s:5,gq:"dominique wilkins windmill dunk"},
+{p:"Derrick Rose",ln:"D-Rose",m:"Explosive Layup",d:"Explode to the rim with a quick finish!",s:3,gq:"derrick rose layup"},
+{p:"Russell Westbrook",ln:"Russ",m:"Tomahawk Dunk",d:"Ball behind head, cock back, SLAM IT!",s:4,gq:"russell westbrook dunk"},
+{p:"Manu Ginobili",ln:"Manu",m:"Euro Step",d:"The OG Euro Step — step left then right!",s:3,gq:"manu ginobili euro step"},
+{p:"Kevin Garnett",ln:"KG",m:"Turnaround Jumper",d:"Post up, turnaround, shoot over the defense!",s:3,gq:"kevin garnett jumper"},
+{p:"Paul Pierce",ln:"Pierce",m:"Step-Back Mid",d:"Step back and nail the clutch mid-range!",s:3,gq:"paul pierce clutch shot"},
+{p:"Ray Allen",ln:"Ray",m:"Catch & Shoot 3",d:"Sprint off the screen, catch, and shoot!",s:2,gq:"ray allen three pointer"},
+{p:"Reggie Miller",ln:"Reggie",m:"Off-Screen 3",d:"Run around a screen and nail the three!",s:3,gq:"reggie miller three pointer"},
+{p:"Jason Williams",ln:"J-Will",m:"Elbow Pass",d:"Bounce the ball off your elbow — playground legend!",s:5,gq:"jason williams elbow pass"},
+{p:"Tim Hardaway",ln:"Hardaway",m:"UTEP Two-Step",d:"Double crossover and blow past your defender!",s:4,gq:"tim hardaway crossover"},
+{p:"Pete Maravich",ln:"Pistol Pete",m:"Behind-Back Dribble",d:"Fancy behind-the-back dribble moves!",s:4,gq:"pete maravich dribble"},
+{p:"Kawhi Leonard",ln:"Kawhi",m:"Mid-Range Assassin",d:"Get to your spot, rise up, drain it. Ice cold!",s:3,yt:"6B4L-wlM8GY",gq:"kawhi leonard midrange"},
+{p:"Joel Embiid",ln:"Embiid",m:"Post Spin Move",d:"Pump fake, spin baseline, finish!",s:4,gq:"joel embiid post move"},
+{p:"DeMar DeRozan",ln:"DeRozan",m:"Footwork Fadeaway",d:"Fancy footwork in the post, hit a tough jumper!",s:4,gq:"demar derozan midrange"},
+{p:"Anthony Edwards",ln:"Ant-Man",m:"Power Dunk",d:"Attack the rim full speed and THROW IT DOWN!",s:4,gq:"anthony edwards dunk"},
+{p:"Trae Young",ln:"Trae",m:"Deep Floater",d:"Pull up from deep and float one in softly!",s:4,gq:"trae young floater"},
+{p:"Isiah Thomas",ln:"Zeke",m:"Acrobatic Layup",d:"Creative, acrobatic finish around the rim!",s:3,gq:"isiah thomas layup pistons"},
+{p:"Charles Barkley",ln:"Sir Charles",m:"Power Post Move",d:"Back them down with brute force and finish!",s:2,gq:"charles barkley dunk"},
+{p:"Shawn Kemp",ln:"Kemp",m:"Alley-Oop Slam",d:"Catch the lob and SLAM it with authority!",s:4,gq:"shawn kemp alley oop dunk"},
+{p:"George Gervin",ln:"Iceman",m:"Finger Roll",d:"Glide to the hoop, softly roll it off your fingers!",s:3,gq:"george gervin finger roll"},
+{p:"Rajon Rondo",ln:"Rondo",m:"Fake Pass Layup",d:"Fake the pass perfectly, then finish yourself!",s:2,gq:"rajon rondo fake pass"},
 ];
 
 const C=[’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’,’#1D1160’,’#236192’,’#EF3B24’,’#002D62’,’#FFC72C’,’#00788C’,’#E31837’,’#002B5C’,’#F9A01B’,’#5D76A9’,’#C8102E’,’#1D428A’,’#552583’,’#007A33’,’#CE1141’,’#006BB6’,’#F58426’,’#860038’,’#E56020’,’#00471B’];
 
 const cv=document.getElementById(‘c’),x=cv.getContext(‘2d’);
-let ang=0,busy=false,sc=0,sk=0;
+let ang=0,busy=false,sc=0,sk=0,curLoad=0;
 
-function sz(){
-const w=document.getElementById(‘wz’).clientWidth-8;
-cv.width=w*2;cv.height=w*2;
-cv.style.width=w+‘px’;cv.style.height=w+‘px’;
-draw();
-}
+function sz(){const w=document.getElementById(‘wz’).clientWidth-8;cv.width=w*2;cv.height=w*2;cv.style.width=w+‘px’;cv.style.height=w+‘px’;draw();}
 
 function draw(){
 const cx=cv.width/2,cy=cv.height/2,r=cx-4,sg=(2*Math.PI)/M.length;
@@ -177,25 +165,19 @@ const a1=ang+i*sg,a2=a1+sg;
 x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,r,a1,a2);x.closePath();
 x.fillStyle=C[i%C.length];x.fill();
 x.strokeStyle=‘rgba(0,0,0,.3)’;x.lineWidth=1;x.stroke();
-// Draw player name on segment
 x.save();x.translate(cx,cy);x.rotate(a1+sg/2);
 x.textAlign=‘right’;x.textBaseline=‘middle’;
 const fs=Math.max(10,Math.min(15,r*.042));
-x.font=`700 ${fs}px 'Oswald','Arial Black',sans-serif`;
+x.font=‘700 ‘+fs+‘px Oswald,Arial Black,sans-serif’;
 const nm=M[i].ln,tx=r-10;
 x.strokeStyle=‘rgba(0,0,0,.85)’;x.lineWidth=3;x.lineJoin=‘round’;x.strokeText(nm,tx,0);
 x.fillStyle=’#fff’;x.fillText(nm,tx,0);
 x.restore();
 });
-// Center circle overlay
 x.beginPath();x.arc(cx,cy,36,0,2*Math.PI);x.fillStyle=‘rgba(0,0,0,.5)’;x.fill();
 }
 
-function win(){
-const sg=(2*Math.PI)/M.length;
-let n=((-Math.PI/2-ang)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
-return Math.floor(n/sg)%M.length;
-}
+function win(){const sg=(2*Math.PI)/M.length;let n=((-Math.PI/2-ang)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);return Math.floor(n/sg)%M.length;}
 
 function spin(){
 if(busy)return;cls();busy=true;
@@ -209,6 +191,103 @@ else{busy=false;document.getElementById(‘spn’).disabled=false;show();}
 })(t0);
 }
 
+/* ===== VIDEO LOADING SYSTEM ===== */
+
+function loadVideo(mv,ga,loadId){
+ga.innerHTML=’<div class="ld"><span class="ball">\u{1F3C0}</span>LOADING…</div>’;
+
+/* Priority 1: YouTube (high quality ESPN content) */
+if(mv.yt){
+const iframe=document.createElement(‘iframe’);
+iframe.src=‘https://www.youtube.com/embed/’+mv.yt+’?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1’;
+iframe.allow=‘autoplay;encrypted-media’;
+iframe.allowFullscreen=true;
+iframe.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
+iframe.onload=function(){if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(iframe);}};
+/* Also try TikTok in parallel as backup */
+if(mv.tk){
+setTimeout(function(){
+if(curLoad===loadId && ga.querySelector(’.ld’)){
+loadTikTok(mv,ga,loadId);
+}
+},3000);
+}
+ga.innerHTML=’’;ga.appendChild(iframe);
+return;
+}
+
+/* Priority 2: TikTok */
+if(mv.tk){
+loadTikTok(mv,ga,loadId);
+return;
+}
+
+/* Priority 3: Giphy search */
+loadGiphy(mv,ga,loadId);
+}
+
+function loadTikTok(mv,ga,loadId){
+const iframe=document.createElement(‘iframe’);
+iframe.src=‘https://www.tiktok.com/player/v1/’+mv.tk+’?music_info=0&description=0&autoplay=1&loop=1’;
+iframe.allow=‘autoplay’;
+iframe.style.cssText=‘width:100%;height:100%;border:0;border-radius:10px;background:#000’;
+iframe.onload=function(){
+if(curLoad===loadId){ga.innerHTML=’’;ga.appendChild(iframe);}
+};
+ga.innerHTML=’’;ga.appendChild(iframe);
+/* Giphy fallback if TikTok takes too long */
+setTimeout(function(){
+if(curLoad===loadId && !ga.querySelector(‘iframe’)){
+loadGiphy(mv,ga,loadId);
+}
+},5000);
+}
+
+function loadGiphy(mv,ga,loadId){
+const q=encodeURIComponent(mv.gq||mv.p+’ ‘+mv.m);
+fetch(‘https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=’+q+’&limit=3&rating=g’)
+.then(function(r){return r.json();})
+.then(function(data){
+if(curLoad!==loadId)return;
+if(data.data&&data.data.length>0){
+var gif=data.data[0];
+var mp4Url=null,gifUrl=null;
+try{mp4Url=gif.images.original.mp4;}catch(e){}
+try{gifUrl=gif.images.fixed_height.url;}catch(e){}
+if(!gifUrl)try{gifUrl=gif.images.original.url;}catch(e){}
+
+```
+    if(mp4Url){
+      var vid=document.createElement('video');
+      vid.autoplay=true;vid.loop=true;vid.muted=true;vid.playsInline=true;
+      vid.setAttribute('playsinline','');
+      vid.src=mp4Url;
+      vid.onloadeddata=function(){if(curLoad===loadId){ga.innerHTML='';ga.appendChild(vid);vid.play().catch(function(){});}};
+      vid.onerror=function(){
+        if(gifUrl&&curLoad===loadId){
+          var img=new Image();img.src=gifUrl;
+          img.onload=function(){if(curLoad===loadId){ga.innerHTML='';ga.appendChild(img);}};
+          img.onerror=function(){showFallback(mv,ga);};
+        } else showFallback(mv,ga);
+      };
+    } else if(gifUrl){
+      var img=new Image();img.src=gifUrl;
+      img.onload=function(){if(curLoad===loadId){ga.innerHTML='';ga.appendChild(img);}};
+      img.onerror=function(){showFallback(mv,ga);};
+    } else showFallback(mv,ga);
+  } else showFallback(mv,ga);
+})
+.catch(function(){if(curLoad===loadId)showFallback(mv,ga);});
+```
+
+}
+
+function showFallback(mv,ga){
+ga.innerHTML=’<div style="text-align:center;padding:20px"><div style="font-size:4rem;animation:bounce .6s ease-in-out infinite alternate">\u{1F3C0}</div><div style="font-family:Bangers,sans-serif;font-size:1.3rem;color:var(--g);margin-top:10px;letter-spacing:2px">’+mv.m.toUpperCase()+’</div><div style="color:rgba(255,255,255,.4);font-size:.7rem;margin-top:6px;letter-spacing:1px">SHOW US YOUR MOVE!</div></div>’;
+}
+
+/* ===== END VIDEO SYSTEM ===== */
+
 function show(){
 const mv=M[win()];
 document.getElementById(‘rpP’).textContent=mv.p;
@@ -216,50 +295,20 @@ document.getElementById(‘rpM’).textContent=mv.m;
 document.getElementById(‘rpD’).textContent=mv.d;
 const on=’\u2605’,off=’\u2606’;
 document.getElementById(‘rpS’).innerHTML=‘Difficulty: <span class="on">’+on.repeat(mv.s)+’</span>’+off.repeat(5-mv.s);
-
-const va=document.getElementById(‘vidArea’);
-va.innerHTML=’’;
-
-// If we have a TikTok video ID, embed it
-if(mv.tk){
-const iframe=document.createElement(‘iframe’);
-iframe.src=‘https://www.tiktok.com/player/v1/’+mv.tk+’?music_info=0&description=0&rel=0’;
-iframe.allow=‘accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture’;
-iframe.setAttribute(‘allowfullscreen’,‘true’);
-iframe.setAttribute(‘loading’,‘lazy’);
-va.appendChild(iframe);
-}
-
-// TikTok button - direct link or search
-const link=mv.tk
-? ‘https://www.tiktok.com/@’+mv.tku+’/video/’+mv.tk
-: ‘https://www.tiktok.com/search?q=’+mv.q;
-
-const a=document.createElement(‘a’);
-a.className=‘tk-btn’;
-a.href=link;
-a.target=’_blank’;
-a.rel=‘noopener noreferrer’;
-a.innerHTML=’<span class="tk-logo"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34.35 18.31A13.17 13.17 0 0 0 42 20.56v-6.98a8.65 8.65 0 0 1-1.8-.19v5.49a13.17 13.17 0 0 1-7.65-2.25v10.28A10.67 10.67 0 0 1 21.88 37.6a10.67 10.67 0 0 1-6.05-9.6 10.67 10.67 0 0 1 12.45-10.54v5.68a5.05 5.05 0 0 0-1.78-.33 5.02 5.02 0 0 0-5 5.04 5.02 5.02 0 0 0 5 5.04 5.02 5.02 0 0 0 5.04-5.04V8h5.45a8.67 8.67 0 0 0 3.35 5.65v4.66Z" fill="#25F4EE"/><path d="M32.55 16.63a13.17 13.17 0 0 0 7.65 2.25v-5.49a8.63 8.63 0 0 1-4.55-3.74v4.66a13.17 13.17 0 0 1-7.65-2.25v10.28a10.67 10.67 0 0 1-10.67 10.69 10.63 10.63 0 0 1-5.95-1.82A10.67 10.67 0 0 0 20.08 37.6a10.67 10.67 0 0 0 10.67-10.69V16.63Z" fill="#FE2C55"/><path d="M36.2 13.39a8.62 8.62 0 0 1-2.15-5.39h-1.7a8.67 8.67 0 0 0 3.85 5.39Zm-14.72 9.77a5.02 5.02 0 0 0-3.22 8.72 5.01 5.01 0 0 1 4.42-7.37 5.07 5.07 0 0 1 1.78.33v-5.68a10.82 10.82 0 0 0-1.78-.14 10.82 10.82 0 0 0-1.2.07v4.4Z" fill="white"/></svg></span> ’+(mv.tk?‘WATCH THE MOVE’:‘FIND ON TIKTOK’);
-va.appendChild(a);
-
-if(!mv.tk){
-const note=document.createElement(‘div’);
-note.className=‘tk-note’;
-note.textContent=‘Opens TikTok search for this move’;
-va.appendChild(note);
-}
-
+const ga=document.getElementById(‘gifArea’);
+ga.innerHTML=’’;
+curLoad++;
 document.getElementById(‘rp’).classList.add(‘on’);
+loadVideo(mv,ga,curLoad);
 }
 
 function cls(){
+curLoad++;
+const ga=document.getElementById(‘gifArea’);
+ga.querySelectorAll(‘video’).forEach(function(v){v.pause();v.src=’’;});
+ga.querySelectorAll(‘iframe’).forEach(function(f){f.src=’’;f.remove();});
+ga.innerHTML=’’;
 document.getElementById(‘rp’).classList.remove(‘on’);
-// Clean up iframes
-const va=document.getElementById(‘vidArea’);
-const iframes=va.querySelectorAll(‘iframe’);
-iframes.forEach(f=>f.src=‘about:blank’);
-setTimeout(()=>va.innerHTML=’’,100);
 }
 
 function nail(){
@@ -269,7 +318,6 @@ document.getElementById(‘skN’).textContent=sk;
 document.getElementById(‘skI’).innerHTML=sk>=5?’🔥🔥🔥’:sk>=3?’🔥🔥’:’🔥’;
 boom();cls();
 }
-
 function nxt(){cls();setTimeout(spin,350);}
 
 function boom(){
@@ -284,7 +332,7 @@ e.style.animationDuration=(2+Math.random()*1.5)+‘s’;
 const z=5+Math.random()*7;
 e.style.width=z+‘px’;e.style.height=z+‘px’;
 e.style.borderRadius=Math.random()>.5?‘50%’:‘2px’;
-b.appendChild(e);setTimeout(()=>e.remove(),3000);
+b.appendChild(e);setTimeout(function(){e.remove();},3000);
 }
 }
 
